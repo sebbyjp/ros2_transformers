@@ -1,0 +1,34 @@
+model {
+  file: "model.sdf"
+}
+name: "Ecoforms_Plant_Bowl_Turquoise_7"
+description: "Ecoforms Plant Bowl, Turquoise, 7\""
+version: 1
+authors {
+  name: "Google"
+  email: "scanned-objects@google.com"
+}
+legal {
+  copyright: "Copyright 2020 Google LLC."
+  license: "Creative Commons Attribution 4.0 International"
+}
+annotations {
+  key: "brand"
+  value: "Ecoforms"
+}
+annotations {
+  key: "gtin"
+  value: "00755866660652"
+}
+annotations {
+  key: "sku"
+  value: "00755866660652"
+}
+compatibilities {
+  name: "Gazebo"
+  version {
+    major: 11
+  }
+}
+categories {
+}

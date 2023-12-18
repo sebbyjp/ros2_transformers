@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+     <arg name="cylinder_args" default="h:=0.25 r:=0.02"/>
+     <arg name="table_args" default="x:=0.5 y:=-0 z:=0.05 l:=0.4 w:=0.5 h:=0.1"/>
+
+     <arg name="use_gazebo" default="true" />
+     <arg name="use_camera" default="true" />
+     <arg name="use_fake" value="false" if="$(arg use_gazebo)"/>
+     <arg name="use_fake" value="true" unless="$(arg use_gazebo)"/>
+     <!-- Load panda demo with MTC's execution capability -->
+     <include file="$(find interbotix_xslocobot_moveit)/launch/xslocobot_moveit.launch">
+          <arg name="use_gazebo" value="$(arg use_gazebo)"/>
+          <arg name="use_fake" value="$(arg use_fake)"/>
+          <arg name="use_moveit_rviz" value="false"/>
+          <arg name="use_camera" value="$(arg use_camera)"/>
+     </include>
+
+     <!-- Franka Panda in gazebo + ros control -->
+     <!-- <include file="$(find ros2_transformers)/launch/panda_world.launch"/> -->
+     <!-- <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" /> --> -->
+     <!-- <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" /> -->
+     <param name="table_description" command="$(find xacro)/xacro $(arg table_args) '$(find ros2_transformers)/urdf/objects/table.urdf.xacro'" />
+     <node name="spawn_gazebo_table" pkg="gazebo_ros" type="spawn_model" args="-urdf -param table_description -model table" respawn="false" output="screen" />
+     <param name="obj_description" command="$(find xacro)/xacro $(arg cylinder_args) '$(find ros2_transformers)/urdf/objects/cylinder.urdf.xacro'" />
+     <node name="spawn_gazebo_obj" pkg="gazebo_ros" type="spawn_model" args="-urdf -param obj_description -model cylinder -x 0.5 -y 0 -z 0.127" respawn="false" output="screen" />
+
+     <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+
+     <!-- <param name="locobot/move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" /> -->
+
+     <!-- Run rviz with prepared config -->
+     <include file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch">
+          <!-- <include ns="locobot" file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch"> -->
+          <arg name="rviz_config" value="$(find moveit_task_constructor_demo)/config/mtc_salad.rviz" />
+     </include>
+</launch>

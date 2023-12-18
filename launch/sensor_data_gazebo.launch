@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="object" default="cylinder"/>
+ <arg name="z" if="$(eval arg('object') == 'cylinder')" value="0.175"/>
+   <arg name="z" if="$(eval arg('object') == 'barclamp')" value="0.12"/>
+    <arg name="z" if="$(eval arg('object') == 'strawberry')" value="0.11"/>
+  <arg name="object_args" value="-x 0.5 -y -0.15 -z $(arg z)"/>
+  <!-- Point cloud data collection -->
+  <arg name="cartesian_limits" default="false" doc="specify cartesian limits on cloud in frame of optical link"/>
+  <arg name="remove_table" default="true" doc="segment table plane from object"/>
+  <arg name="xyz_lower_limits" default="[0.1, -0.1, 0.0]" doc="lower x,y,z cartesian limits on cloud"/>
+  <arg name="xyz_upper_limits" default="[0.2, 0.1, 0.75]" doc="upper x,y,z cartesian limits on cloud"/>
+
+  <arg name="point_cloud_topic" value="/camera/depth/color/points" doc="point cloud topic name"/>
+  <arg name="cloud_dir" value="$(find moveit_task_constructor_gpd)/data/pointclouds/" doc="directory to point clouds"/>
+
+  <!-- Point cloud data collection -->
+  <node name="point_cloud_server" pkg="moveit_task_constructor_gpd" type="point_cloud_server" output="screen">
+    <param name="cartesian_limits" value="$(arg cartesian_limits)"/>
+    <rosparam param="xyz_lower_limits" subst_value="True">$(arg xyz_lower_limits)</rosparam>
+    <rosparam param="xyz_upper_limits" subst_value="True">$(arg xyz_upper_limits)</rosparam>
+    <param name="point_cloud_topic" value="$(arg point_cloud_topic)"/>
+    <param name="cloud_dir" value="$(arg cloud_dir)"/>
+    <param name="remove_table" value="$(arg remove_table)"/>
+  </node>
+
+  <!-- Image data collection -->
+  <arg name="color_img_topic" value="/camera/color/image_raw" doc="topic name for raw color image"/>
+  <arg name="depth_img_topic" value="/camera/depth/image_raw" doc="topic name for raw depth image"/>
+  <arg name="image_dir" value="$(find moveit_task_constructor_dexnet)/data/images/" doc="directory to save images"/>
+
+  <node name="process_image_server" pkg="moveit_task_constructor_dexnet" type="process_image_server" output="screen">
+    <param name="color_img_topic" value="$(arg color_img_topic)"/>
+    <param name="depth_img_topic" value="$(arg depth_img_topic)"/>
+    <param name="image_dir" value="$(arg image_dir)"/>
+  </node>
+
+  <!-- publish tf for camera links -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
+
+  <!-- simulate depth camera -->
+  <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/camera/camera.urdf.xacro'"/>
+  <node name="spawn_gazebo_camera" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param robot_description -model camera" respawn="false" output="screen" /> -->
+
+   <include file="$(find interbotix_xslocobot_moveit)/launch/xslocobot_moveit.launch">
+    <arg name="use_gazebo" value="true"/>
+    <arg name="use_fake" value="false"/>
+    <arg name="use_moveit_rviz" value="false"/>
+  </include>
+
+   <arg name="table_args" default="x:=0.5 y:=0 z:=0.05 l:=0.4 w:=0.5 h:=0.1"/>
+   <param name="table_description" command="$(find xacro)/xacro $(arg table_args) '$(find ros2_transformers)/urdf/objects/table.urdf.xacro'" />
+<node name="spawn_gazebo_table" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param table_description -model table" respawn="false" output="screen" />
+  <!-- spawn object -->
+  <!-- cylinder -->
+  <!-- <param name="object_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/$(arg object).urdf.xacro'"/>
+  <node name="spawn_gazebo_object" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param object_description -model object -x 0.65 -y -0.2 -z $(arg z)" respawn="false" output="screen" /> -->
+  
+     <!-- <include  file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch"> -->
+  <!-- <include ns="locobot" file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch"> -->
+  <!-- </include> -->
+
+  <!-- bar clamp -->
+ <!-- <param name="object_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/bar_clamp.urdf.xacro'"/>
+ <node name="spawn_gazebo_object" pkg="gazebo_ros" type="spawn_model"
+    args="-urdf -param object_description -model bar_clamp -x 0.5 -y 0.0 -z 0.03" respawn="false" output="screen" /> -->
+
+  <!-- strawberry -->
+  <param name="object_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/$(arg object).urdf.xacro'"/>
+  <node name="spawn_gazebo_object" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param object_description -model object $(arg object_args)" respawn="false" output="screen" />
+
+
+  <include  file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch">
+    <arg name="rviz_config" value="$(find ros2_transformers)/config/sensor_peralta.rviz" />
+  </include>
+</launch>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- <arg name="debug" value="false"/>
+  <arg name="rviz" default="false" />
+  <arg name="use_gui" default="false" doc="joint state publisher gui" /> -->
+
+  <!-- Gazebo specific options -->
+  <!-- <arg name="paused" default="true"/>
+  <arg name="gazebo_gui" default="true"/> -->
+
+  <!-- launch the gazebo simulator and spawn the robot -->
+  <!-- <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" default="worlds/empty.world"/>
+    <arg name="verbose" value="false"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gazebo_gui)"/>
+  </include> -->
+
+  <!-- send robot urdf to param server -->
+  <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find franka_description)/robots/panda_arm_hand.urdf.xacro'"/> -->
+  <!-- <param name="camera_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/robots/panda_camera.urdf.xacro'"/> -->
+
+  <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
+  <!-- <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_description -model camera -x 0 -y 0 -z 0"
+    respawn="false" output="screen" /> -->
+
+  <!-- load controllers -->
+  <!-- <include file="$(find panda_moveit_config)/launch/ros_controllers.launch"/> -->
+
+  <!-- <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" /> -->
+
+  <!-- Given the published joint states, publish tf for the robot links -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" /> -->
+
+  <!-- Run the main MoveIt! executable without trajectory execution (we do not have controllers configured by default) -->
+  <!-- <include file="$(find panda_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include> -->
+
+  <!-- Load  ExecuteTaskSolutionCapability so we can execute found solutions in simulation -->
+  <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+
+  <!-- Run Rviz and load the default config to see the state of the move_group node -->
+  <include file="$(find interbotix_xslocobot_moveit)/launch/xslocobot_moveit.launch">
+    <arg name="use_gazebo" value="true"/>
+     <arg name="use_moveit_rviz" value="false"/>
+  </include>
+
+  <!-- Run Rviz -->
+  <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="-d $(find moveit_task_constructor_demo)/config/mtc.rviz">
+    <rosparam command="load" file="$(find ros2_transformers)/config/kinematics.yaml"/>
+  </node>
+</launch>

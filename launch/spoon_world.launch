@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+     <arg name="z1" value="0.05"/>
+     <arg name="z2" value="0.05"/>
+     <arg name="y1" value="-0.15"/>
+     <arg name="y2" value="0.12"/>
+
+     <arg name="spoon1_args" default="-x 0.51 -y $(arg y1) -z 0.05  -P -0.38 -Y 3.1415"/>
+
+     <arg name="collect_data" default="false"/>
+     <arg name="use_gazebo" default="true" />
+     <arg name="use_camera" default="true" />
+     <arg name="use_fake" value="false" if="$(arg use_gazebo)"/>
+     <arg name="use_fake" value="true" unless="$(arg use_gazebo)"/>
+     <!-- Load panda demo with MTC's execution capability -->
+     <include file="$(find interbotix_xslocobot_moveit)/launch/xslocobot_moveit.launch">
+          <arg name="use_gazebo" value="$(arg use_gazebo)"/>
+          <arg name="use_fake" value="$(arg use_fake)"/>
+          <arg name="use_moveit_rviz" value="false"/>
+          <arg name="use_camera" value="$(arg use_camera)"/>
+     </include>
+
+
+     
+     <node name="spawn_spoon1" pkg="gazebo_ros" type="spawn_model" 
+     args="-file '$(find ros2_transformers)/object_models/big_spoon/model.sdf' -sdf -model spoon1 $(arg spoon1_args)" 
+     respawn="false" output="screen" />
+     <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+
+
+     <arg name="rviz_config" default="mtc_salad.rviz" />
+     <!-- Run rviz with prepared config -->
+     <include file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch">
+          <!-- <include ns="locobot" file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch"> -->
+          <arg name="rviz_config" value="$(find moveit_task_constructor_demo)/config/$(arg rviz_config)" />
+     </include>
+            <arg name="cartesian_limits" default="false" doc="specify cartesian limits on cloud in frame of optical link"/>
+  <arg name="remove_table" default="false" doc="segment table plane from object"/>
+        <arg name="xyz_lower_limits" default="[-1, -1, 0.0]" doc="lower x,y,z cartesian limits on cloud" />
+    <arg name="xyz_upper_limits" default="[1, 1, 0.75]" doc="upper x,y,z cartesian limits on cloud" />
+
+    <arg name="point_cloud_topic" value="/camera/depth/color/points" doc="point cloud topic name" />
+    <arg name="cloud_dir" value="$(find moveit_task_constructor_gpd)/data/pointclouds/block_world/" doc="directory to point clouds" />
+
+         <!-- Point cloud data collection -->
+    <node if="$(arg collect_data)"  name="point_cloud_server" pkg="moveit_task_constructor_gpd" type="point_cloud_server" output="screen">
+        <param name="cartesian_limits" value="$(arg cartesian_limits)" />
+        <rosparam param="xyz_lower_limits" subst_value="True">$(arg xyz_lower_limits)</rosparam>
+        <rosparam param="xyz_upper_limits" subst_value="True">$(arg xyz_upper_limits)</rosparam>
+        <param name="point_cloud_topic" value="$(arg point_cloud_topic)" />
+        <param name="cloud_dir" value="$(arg cloud_dir)" />
+        <param name="remove_table" value="true" />
+    </node>
+
+
+</launch>

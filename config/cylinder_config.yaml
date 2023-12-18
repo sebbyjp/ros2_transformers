@@ -1,0 +1,82 @@
+# Total planning attempts
+max_solutions: 10
+
+# Planning group and link names
+arm_group_name: "interbotix_arm"
+eef_name: "interbotix_hand"
+hand_group_name: "interbotix_hand"
+hand_frame: "locobot_fingers_link"
+
+# Poses
+hand_open_pose: "Open"
+hand_close_pose: "Closed"
+arm_home_pose: "Home"
+
+# Scene frames
+world_frame: "world"
+table_reference_frame: "world"
+object_reference_frame: "world"
+camera_reference_frame: "world"
+bowl_reference_frame: "world"
+surface_link: "table"
+
+
+
+# Camera collision object
+spawn_camera: false
+camera_name: "camera"
+camera_mesh_file: "package://ros2_transformers/meshes/camera/kinect.dae"
+# camera_pose: [0.5, 0, 0.7, 0, 0, 0] # side
+# camera_pose: [0.5, 0, 0.7, 0, 1.571, 1.571] # over head
+
+# Collision object for picking
+# CYLINDER object specifications
+spawn_mesh: false
+spawn_object: true
+object_name: "object"
+object_dimensions: [0.25, 0.02] # [height, radius]
+object_pose: [0.5, 0, 0.1, 0, 0, 0]
+object_start_surface: "table"
+object_end_surface: "table"
+
+# # BAR CLAMP
+# spawn_mesh: true
+# object_name: "object"
+# object_mesh_file: "package://ros2_transformers/meshes/objects/bar_clamp.dae"
+# object_dimensions: [0.06, 0.12, 0.04]  # [length, width, height]
+# object_pose: [0.5, 0, 0.03, 0, 0, 0]
+
+# STRAWBERRY
+# spawn_mesh: true
+# object_name: "object"
+# object_mesh_file: "package://ros2_transformers/meshes/objects/strawberry.dae"
+# object_dimensions: [0.02]  # [radius]
+# object_pose: [0.5, 0, 0., 0, 0, 0]
+
+
+
+# Table model
+spawn_table: true
+table_name: "table"
+table_dimensions: [0.4, 0.5, 0.1]  # [length, width, height]
+table_pose: [0.5, 0, 0, 0, 0, 0]
+
+# Gripper grasp frame transform [x,y,z,r,p,y]
+grasp_frame_transform: [0, 0, 0, 0, 0, 0]
+
+# Place pose [x,y,z,r,p,y]
+# place_pose: [0.5, 0.3, 0, 0, 0, 0]
+object_place_pose: [0.4, -0.15, 0.1, 0, 0, 0]
+place_surface_offset: 0.0001 # place offset from table
+
+# Valid distance range when approaching an object for picking
+approach_object_min_dist: 0.03
+approach_object_max_dist: 0.15
+
+# Valid height range when lifting an object after pick
+lift_object_min_dist: 0.01
+lift_object_max_dist: 0.1
+
+lower_object_min_dist: 0.05
+lower_object_max_dist: 0.1
+

@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<launch>
+     <arg name="z1" value="0.05"/>
+     <arg name="z2" value="0.05"/>
+     <arg name="y1" value="-0.15"/>
+     <arg name="y2" value="0.12"/>
+     <arg name="y_mustard" value="0.25"/>
+     <arg name="bowl1_args" default="-x 0.55 -y $(arg y1) -z $(arg z1)"/>
+     <arg name="bowl2_args" default="-x 0.55 -y $(arg y2) -z $(arg z2)"/>
+     <!-- <arg name="mustard_args" default="-x 0.55 -y 0.25 -z 0.09"/> -->
+     <arg name="mustard_args" default="-x 0.35 -y $(arg y_mustard) -z 0.055"/>
+     <arg name="table_args" default="x:=0.55 y:=0 z:=0.025 l:=0.65 w:=0.7 h:=0.05"/>
+     <arg name="bowl3_args" default="-x 0.35 -y 0 -z 0.05"/>
+     <arg name="spoon1_args" default="-x 0.45 -y $(arg y1) -z 0.13  -P -0.38 -Y 3.1415"/>
+     <arg name="spoon2_args" default="-x 0.45 -y $(arg y2) -z 0.11  -P -0.45 -Y 3.1415"/>
+
+     <arg name="collect_data" default="false"/>
+     <arg name="use_gazebo" default="true" />
+     <arg name="use_camera" default="true" />
+     <arg name="use_fake" value="false" if="$(arg use_gazebo)"/>
+     <arg name="use_fake" value="true" unless="$(arg use_gazebo)"/>
+     <!-- Load panda demo with MTC's execution capability -->
+     <include file="$(find interbotix_xslocobot_moveit)/launch/xslocobot_moveit.launch">
+          <arg name="use_gazebo" value="$(arg use_gazebo)"/>
+          <arg name="use_fake" value="$(arg use_fake)"/>
+          <arg name="use_moveit_rviz" value="false"/>
+          <arg name="use_camera" value="$(arg use_camera)"/>
+     </include>
+
+
+     <!-- Franka Panda in gazebo + ros control -->
+     <!-- <include file="$(find ros2_transformers)/launch/panda_world.launch"/> -->
+     <!-- <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" /> --> -->
+     <!-- <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" /> -->
+     <param name="table_description" command="$(find xacro)/xacro $(arg table_args) '$(find ros2_transformers)/urdf/objects/table.urdf.xacro'" />
+     <node name="spawn_gazebo_table" pkg="gazebo_ros" type="spawn_model" args="-urdf -param table_description -model table" respawn="false" output="screen" />
+     <!-- spawn object -->
+     <!-- <param name="bowl1" textfile="/home/sebastian/.gazebo/models/red_bowl/model.sdf" /> -->
+     <node name="spawn_bow1" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ros2_transformers)/object_models/red_bowl/model.sdf' -sdf -model bowl1 $(arg bowl1_args)" respawn="false" output="screen" />
+     <node name="spawn_bowl2" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ros2_transformers)/object_models/green_bowl/model.sdf' -sdf -model bowl2 $(arg bowl2_args)" respawn="false" output="screen" />
+     <node name="spawn_mustard" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ros2_transformers)/object_models/mustard_bottle/model.sdf' -sdf -model mustard $(arg mustard_args)" respawn="false" output="screen" />
+     <node name="spawn_bowl3" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ros2_transformers)/object_models/serving_bowl/model.sdf' -sdf -model bowl3 $(arg bowl3_args)" respawn="false" output="screen" />
+
+     <node name="spawn_spoon1" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ros2_transformers)/object_models/big_spoon/model.sdf' -sdf -model spoon1 $(arg spoon1_args)" respawn="false" output="screen" />
+     <node name="spawn_spoon2" pkg="gazebo_ros" type="spawn_model" args="-file '$(find ros2_transformers)/object_models/big_spoon/model.sdf' -sdf -model spoon2 $(arg spoon2_args)" respawn="false" output="screen" />
+     <!-- strawberry -->
+     <!-- <param name="object_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/strawberry.urdf.xacro'"/>
+  <node name="spawn_gazebo_object" pkg="gazebo_ros" type="spawn_model" args="-urdf -param object_description -model strawberry -x 0.5 -y 0.0 -z 0.0" respawn="false" output="screen" /> -->
+     <!-- <param name="camera_desc" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/camera/camera.urdf.xacro'"/>
+ <node name="spawn_gazebo_camera" pkg="gazebo_ros" type="spawn_model" args="-urdf -param camera_desc -model camera -x 0 -y 0 -z 0" respawn="false" output="screen" /> -->
+     <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+
+
+     <arg name="rviz_config" default="mtc_salad.rviz" />
+     <!-- Run rviz with prepared config -->
+     <include file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch">
+          <!-- <include ns="locobot" file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch"> -->
+          <arg name="rviz_config" value="$(find ros2_transformers)/config/$(arg rviz_config)" />
+     </include>
+            <arg name="cartesian_limits" default="false" doc="specify cartesian limits on cloud in frame of optical link"/>
+  <arg name="remove_table" default="false" doc="segment table plane from object"/>
+        <arg name="xyz_lower_limits" default="[-1, -1, 0.0]" doc="lower x,y,z cartesian limits on cloud" />
+    <arg name="xyz_upper_limits" default="[1, 1, 0.75]" doc="upper x,y,z cartesian limits on cloud" />
+
+    <!-- <arg name="point_cloud_topic" value="/camera/depth/color/points" doc="point cloud topic name" />
+    <arg name="cloud_dir" value="$(find moveit_task_constructor_gpd)/data/pointclouds/block_world/" doc="directory to point clouds" /> -->
+
+         <!-- Point cloud data collection -->
+    <!-- <node if="$(arg collect_data)"  name="point_cloud_server" pkg="moveit_task_constructor_gpd" type="point_cloud_server" output="screen">
+        <param name="cartesian_limits" value="$(arg cartesian_limits)" />
+        <rosparam param="xyz_lower_limits" subst_value="True">$(arg xyz_lower_limits)</rosparam>
+        <rosparam param="xyz_upper_limits" subst_value="True">$(arg xyz_upper_limits)</rosparam>
+        <param name="point_cloud_topic" value="$(arg point_cloud_topic)" />
+        <param name="cloud_dir" value="$(arg cloud_dir)" />
+        <param name="remove_table" value="true" />
+    </node> -->
+
+<!-- <node name="segment" pkg="semantic_segmentation" type="segmentation_node">
+<param name="topic_image" value="color/image_raw"/>
+</node> -->
+</launch>

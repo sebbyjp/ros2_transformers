@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<launch>
+ <arg name="object" default="strawberry" />
+  <arg name="z" if="$(eval arg('object') == 'strawberry')" value="0.11"/>
+  <arg name="z" if="$(eval arg('object') == 'barclamp')" value="0.12"/>
+<arg name="object_args" default="object -x 0.5 -y -0.15 -z $(arg z)"/>
+<arg name="table_args" default="x:=0.5 y:=0 z:=0.05 l:=0.4 w:=0.5 h:=0.1"/>
+<arg name="bowl_args" default="bowl -x 0.5 -y 0.15 -z 0.1175"/>
+
+ <arg name="use_gazebo" default="true" />
+ <arg name="use_fake" value="false" if="$(arg use_gazebo)"/>
+  <arg name="use_fake" value="true" unless="$(arg use_gazebo)"/>
+  <!-- Load panda demo with MTC's execution capability -->
+  <include file="$(find interbotix_xslocobot_moveit)/launch/xslocobot_moveit.launch">
+    <arg name="use_gazebo" value="$(arg use_gazebo)"/>
+    <arg name="use_fake" value="$(arg use_fake)"/>
+    <arg name="use_moveit_rviz" value="false"/>
+  </include>
+
+
+  <!-- Franka Panda in gazebo + ros control -->
+  <!-- <include file="$(find ros2_transformers)/launch/panda_world.launch"/> -->
+   <!-- <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" /> --> -->
+     <!-- <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" /> -->
+<param name="table_description" command="$(find xacro)/xacro $(arg table_args) '$(find ros2_transformers)/urdf/objects/table.urdf.xacro'" />
+<node name="spawn_gazebo_table" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param table_description -model table" respawn="false" output="screen" />
+
+<!-- <param name="bowl_description" textfile="$(find ros2_transformers)/sdf/bowl.sdf" /> -->
+<param name="bowl_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/bowl.urdf.xacro'" />
+<node name="spawn_gazebo_bowl" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param bowl_description -model $(arg bowl_args)" respawn="false" output="screen" />
+  <!-- spawn object -->
+<param name="object_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/$(arg object).urdf.xacro'" />
+<node name="spawn_gazebo_object" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param object_description -model $(arg object_args)" respawn="false" output="screen" />
+
+  <!-- strawberry -->
+  <!-- <param name="object_description" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/objects/strawberry.urdf.xacro'"/>
+  <node name="spawn_gazebo_object" pkg="gazebo_ros" type="spawn_model"
+     args="-urdf -param object_description -model strawberry -x 0.5 -y 0.0 -z 0.0" respawn="false" output="screen" /> -->
+      <!-- <param name="camera_desc" command="$(find xacro)/xacro '$(find ros2_transformers)/urdf/camera/camera.urdf.xacro'"/>
+ <node name="spawn_gazebo_camera" pkg="gazebo_ros" type="spawn_model"
+    args="-urdf -param camera_desc -model camera -x 0 -y 0 -z 0" respawn="false" output="screen" /> -->
+  <param name="move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" />
+  
+  <!-- <param name="locobot/move_group/capabilities" value="move_group/ExecuteTaskSolutionCapability" /> -->
+
+  <!-- Run rviz with prepared config -->
+   <include  file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch">
+  <!-- <include ns="locobot" file="$(find interbotix_xslocobot_moveit)/launch/moveit_rviz.launch"> -->
+    <arg name="rviz_config" value="$(find moveit_task_constructor_demo)/config/mtc_peralta.rviz" />
+  </include>
+</launch>

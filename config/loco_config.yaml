@@ -1,0 +1,70 @@
+# Total planning attempts
+max_solutions: 10
+
+# Planning group and link names
+arm_group_name: "interbotix_arm"
+eef_name: "interbotix_hand"
+hand_group_name: "interbotix_hand"
+hand_frame: "locobot_fingers_link"
+
+# Poses
+hand_open_pose: "Open"
+hand_close_pose: "Closed"
+arm_home_pose: "Home"
+
+# Scene frames
+world_frame: "world"
+table_reference_frame: "world"
+object_reference_frame: "world"
+camera_reference_frame: "world"
+bowl_reference_frame: "world"
+surface_link: "table"
+
+
+
+# Camera collision object
+spawn_camera: false
+camera_name: "camera"
+camera_mesh_file: "package://ros2_transformers/meshes/camera/kinect.dae"
+# camera_pose: [0.5, 0, 0.7, 0, 0, 0] # side
+camera_pose: [0.5, 0, 0.7, 0, 1.571, 1.571] # over head
+
+# Table model
+spawn_table: true # true
+table_name: "table"
+table_dimensions: [0.65, 0.7, 0.05]  # [length, width, height]
+table_pose: [0.55, 0, 0.05, 0, 0, 0]
+
+# Bowl model
+spawn_bowl: false # true
+bowl_name: "bowl"
+bowl_dimensions: [0.035, 0.098]  # [height, radius]
+bowl_pose: [0.5, 0.15, 0.1, 0, 0, 0]
+bowl_mesh_file: "package://ros2_transformers/meshes/objects/bowl.dae"
+
+# Gripper grasp frame transform [x,y,z,r,p,y]
+# grasp_frame_transform: [0, 0, 0.1, 1.571, 0.785, 1.571]
+# grasp_frame_transform: [0.015, 0, 0.05, 0, 0, 0]
+grasp_frame_transform: [0, 0, 0, 0, 0, 0]
+
+
+# Place pose [x,y,z,r,p,y]
+# place_pose: [0.5, 0.3, 0, 0, 0, 0]
+# place_pose: [0.65, -0.2, 0.1, 0, 0, 0]
+grasp_pose: [0.5, 0.23, 0.13, 3.1415, 0, 0]
+place_pose: [0.37, 0.27, 0.125, 0, 0, 0]
+pre_pour_pose: [0.35, 0, 0.3, 0, 0, 0]
+pour_pose: [0.35, 0, 0.3, 3.14, 0, 0]
+place_surface_offset: 0.0001 # place offset from table
+
+# Valid distance range when approaching an object for picking
+approach__min_dist: 0.04
+approach_max_dist: 0.1
+
+# Valid height range when lifting an object after pick
+lift_min_dist: 0.03
+lift_max_dist: 0.1
+
+ladle1_pose: [0.57, -0.25, 0.15, 0, 1.571, 0]
+ladle1_name: "ladle1"
+spawn_ladle1: true
