@@ -3,8 +3,8 @@
   <world name="empty">
     <!-- Sim must be faster than the controller rate or there will be an error -->
     <physics name="sim_time" type="ignored">
-      <max_step_size>0.01</max_step_size>
-      <real_time_update_rate>100</real_time_update_rate>
+      <max_step_size>0.02</max_step_size>
+      <real_time_update_rate>50</real_time_update_rate>
       <real_time_factor>1.0</real_time_factor>
     </physics>
 

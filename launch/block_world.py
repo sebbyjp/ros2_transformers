@@ -1,11 +1,10 @@
 from os import path
-from launch import LaunchDescription, LaunchContext
+from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import (
     IncludeLaunchDescription,
     DeclareLaunchArgument,
-    OpaqueFunction,
 )
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (
@@ -14,10 +13,6 @@ from launch.substitutions import (
     Command,
     LaunchConfiguration,
 )
-from pathlib import Path
-from launch.actions import SetEnvironmentVariable
-from launch.substitutions import EnvironmentVariable
-from launch.action import Action
 from ament_index_python.packages import get_package_share_directory
 import yaml
 
@@ -116,7 +111,7 @@ def generate_launch_description() -> LaunchDescription:
         xacro_args='color:=yellow')
 
     # Examples: https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge
-    bridge = Node(
+    bridge = Node(      
         package='ros_gz_bridge',
         executable='parameter_bridge',
         output='screen',
@@ -149,18 +144,18 @@ def generate_launch_description() -> LaunchDescription:
             }
         ],
     )
-    moveit_rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        # namespace=robot_name_launch_arg,
-        arguments=[
-            '-d', ' /third_party/moveit_task_constructor/demo/config/mtc.rviz',
-            '-f', ('locobot', '_base_link')
-        ],
-        # remappings=remappings,
-        output={'both': 'screen'},
-    )
+    # moveit_rviz_node = Node(
+    #     package='rviz2',
+    #     executable='rviz2',
+    #     name='rviz2',
+    #     # namespace=robot_name_launch_arg,
+    #     arguments=[
+    #         '-d', ' /third_party/moveit_task_constructor/demo/config/mtc.rviz',
+    #         '-f', ('locobot', '_base_link')
+    #     ],
+    #     # remappings=remappings,
+    #     output={'both': 'screen'},
+    # )
 
     rt1_demo_node = Node(
         name="rt1_demo_node",
@@ -200,6 +195,6 @@ def generate_launch_description() -> LaunchDescription:
         spawn_block1,
         spawn_block2,
         spawn_block3,
-        rt1_demo_node,
+        # rt1_demo_node,
         # moveit_rviz_node,
     ])

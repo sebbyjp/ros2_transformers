@@ -65,10 +65,7 @@ ament_target_dependencies(rt1 PUBLIC
     dgl_ros_moveit
     sensor_msgs
     rviz_visual_tools
-    moveit_msgs
-    moveit_visual_tools
-    moveit_ros_planning_interface
-    moveit)
+)
 target_link_libraries(rt1 PUBLIC
     ${Python_LIBRARIES}
     ${pybind11_LIBRARIES})
@@ -82,15 +79,29 @@ add_executable(rt1_demo_scene
 ament_target_dependencies(rt1_demo_scene PUBLIC
     rclcpp
     moveit_visual_tools
-    moveit_ros_planning_interface)
-# target_link_libraries(rt1_demo_scene PUBLIC
-#     ${DEPENDENCIES})
+    moveit_ros_planning_interface
+    )
+add_executable(rt1_demo_app
+    src/rt1_demo_app.cpp
+)
+ament_target_dependencies(rt1_demo_app PUBLIC
+    rclcpp
+    dgl_ros_interfaces
+    moveit_visual_tools
+    moveit_ros_planning_interface
+    moveit_msgs
+    moveit_task_constructor_core
+    moveit_ros_planning_interface
+    moveit
+    moveit_ros
+    )
+
 target_include_directories(rt1_demo_scene PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
     
 install(TARGETS
-    rt1 rt1_demo_scene
+    rt1 rt1_demo_scene rt1_demo_app
     EXPORT export_${PROJECT_NAME}
     RUNTIME DESTINATION lib/${PROJECT_NAME}
     LIBRARY DESTINATION lib
