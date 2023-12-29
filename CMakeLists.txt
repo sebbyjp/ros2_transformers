@@ -86,6 +86,7 @@ add_executable(rt1_demo_app
 )
 ament_target_dependencies(rt1_demo_app PUBLIC
     rclcpp
+    tf2_eigen
     dgl_ros_interfaces
     moveit_visual_tools
     moveit_ros_planning_interface

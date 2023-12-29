@@ -155,4 +155,5 @@
     "C_Cpp.errorSquiggles": "enabled",
     "git.ignoreLimitWarning": true,
     "C_Cpp.workspaceParsingPriority": "highest",
+    "C_Cpp.default.compilerPath": "/usr/bin/aarch64-linux-gnu-g++",
 }
