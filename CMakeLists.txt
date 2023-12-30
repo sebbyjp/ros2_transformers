@@ -26,8 +26,6 @@ find_package(pybind11 CONFIG REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(dgl_ros REQUIRED)
-find_package(dgl_ros_interfaces REQUIRED)
-find_package(dgl_ros_moveit REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(tf2_eigen REQUIRED)
@@ -62,7 +60,6 @@ ament_target_dependencies(rt1 PUBLIC
     rclcpp
     dgl_ros_interfaces
     dgl_ros
-    dgl_ros_moveit
     sensor_msgs
     rviz_visual_tools
 )
@@ -113,10 +110,8 @@ ament_export_dependencies(${DEPENDENCIES})
 
 install(DIRECTORY
 launch
-urdf
-worlds
+tasks
 config
-meshes
     DESTINATION share/${PROJECT_NAME}
 )
 

@@ -53,8 +53,11 @@ def spawn_create_item_node(
 
 def generate_launch_description() -> LaunchDescription:
     ros2_transformers_dir = get_package_share_directory('ros2_transformers')
-    with open(path.join(ros2_transformers_dir, 'config/block_config.yaml')) as f:
+
+    with open(path.join(ros2_transformers_dir, 'tasks/sim/stack_blocks_task.yaml')) as f:
         task_config = yaml.load(f, Loader=yaml.FullLoader)
+    with open(path.join(ros2_transformers_dir, 'config/rt1_demo_app.yaml')) as f:
+        app_config = yaml.load(f, Loader=yaml.FullLoader)
 
     start_gz_world = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -72,7 +75,7 @@ def generate_launch_description() -> LaunchDescription:
         'table',
         PathJoinSubstitution([
             FindPackageShare('ros2_transformers'),
-            'urdf/objects/table.urdf.xacro ',
+     'tasks/sim/object_descriptions/urdf/objects/table.urdf.xacro ',
         ]), x, y, z)
 
     x, y, z, _, _, _ = task_config['block1_pose']
@@ -80,7 +83,7 @@ def generate_launch_description() -> LaunchDescription:
         'block1',
         PathJoinSubstitution([
             FindPackageShare('ros2_transformers'),
-            'urdf/objects/block.urdf.xacro ',
+     'tasks/sim/object_descriptions/urdf/objects/block.urdf.xacro ',
         ]),
         x,
         y,
@@ -92,7 +95,7 @@ def generate_launch_description() -> LaunchDescription:
         'block2',
         PathJoinSubstitution([
             FindPackageShare('ros2_transformers'),
-            'urdf/objects/block.urdf.xacro ',
+             'tasks/sim/object_descriptions/urdf/objects/block.urdf.xacro ',
         ]),
         x,
         y,
@@ -103,7 +106,7 @@ def generate_launch_description() -> LaunchDescription:
         'block3',
         PathJoinSubstitution([
             FindPackageShare('ros2_transformers'),
-            'urdf/objects/block.urdf.xacro ',
+        'tasks/sim/object_descriptions/urdf/objects/block.urdf.xacro ',
         ]),
         x,
         y,
@@ -157,16 +160,13 @@ def generate_launch_description() -> LaunchDescription:
     #     output={'both': 'screen'},
     # )
 
-    rt1_demo_node = Node(
-        name="rt1_demo_node",
+    rt1_demo_app = Node(
+        name="rt1_demo_app",
         package='ros2_transformers',
-        executable='rt1_demo_scene',
+        executable='rt1_demo_app',
         output='screen',
         parameters=[
-            task_config,
-            {
-                'deep_grasps': LaunchConfiguration('deep_grasps'),
-            },
+            app_config
         ],
     )
 
@@ -175,14 +175,9 @@ def generate_launch_description() -> LaunchDescription:
             'world_filepath',
             default_value=PathJoinSubstitution([
                 FindPackageShare('ros2_transformers'),
-                'worlds/empty.sdf',
+                'tasks/sim/worlds/empty.sdf',
             ]),
             description='the file path to the Gazebo world file to load.',
-        ),
-        DeclareLaunchArgument(
-            'deep_grasps',
-            default_value='false',
-            description='Should use deep grasp algorithm.',
         ),
         DeclareLaunchArgument(
             'gz_args',
@@ -195,6 +190,6 @@ def generate_launch_description() -> LaunchDescription:
         spawn_block1,
         spawn_block2,
         spawn_block3,
-        # rt1_demo_node,
+        rt1_demo_app,
         # moveit_rviz_node,
     ])

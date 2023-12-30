@@ -1,0 +1,3 @@
+use_sim_time: true 
+num_iterations: 100
+sleep_time_ms: 4000

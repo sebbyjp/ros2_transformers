@@ -44,21 +44,21 @@ spawn_objs: ["block3", "block2", "block1"]
 # block3_place_pose: [0.35, 0.2,0, 0, 0, 0]
 block1_name: "block1"
 block1_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
-block1_pose: [0.4, -0.1, 0.013, 0, 0, 0]
+block1_pose: [0.52, -0.1, 0.013, 0, 0, 0]
 block1_place_pose: [0.3, 0.2,  0.063, 0, 0, 0]
 block1_start_surface: "table"
 block1_end_surface: "block2"
 
 block2_name: "block2"
 block2_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
-block2_pose: [0.4, -0.1, 0.039, 0, 0, 0]
+block2_pose: [0.52, -0.1, 0.039, 0, 0, 0]
 block2_place_pose: [0.3, 0.2, 0.039, 0, 0, 0]
 block2_start_surface: "block1"
 block2_end_surface: "block3"
 
 block3_name: "block3"
 block3_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
-block3_pose: [0.4, -0.1, 0.063, 0, 0, 0]
+block3_pose: [0.52, -0.1, 0.063, 0, 0, 0]
 block3_place_pose: [0.3, 0.2,0.013, 0, 0, 0]
 block3_start_surface: "block2"
 block3_end_surface: "table"

@@ -32,7 +32,7 @@
             </xacro:if>
         </xacro:macro>
         <diffuse><xacro:rgba/></diffuse>
-        <specular><xacro:rgba/></specular>
+        <specular>0.2 0.2 0.2 0.64</specular>
         <ambient><xacro:rgba/></ambient>
     </xacro:macro>
 </robot>

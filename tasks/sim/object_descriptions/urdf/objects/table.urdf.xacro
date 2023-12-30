@@ -36,7 +36,7 @@
   <gazebo reference="table">
     <visual>
       <material>
-        <xacro:include filename="$(find ros2_transformers)/urdf/colors.urdf.xacro" />
+        <xacro:include filename="$(find ros2_transformers)/tasks/sim/object_descriptions/urdf/colors.urdf.xacro" />
         <xacro:color color="blue" />
       </material>
     </visual>

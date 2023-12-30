@@ -21,10 +21,12 @@ namespace r2t
 
     // Whether or not to load the inference server or just pass through.
     this->declare_parameter("pass_through", true);
+    this->declare_parameter("model_key", "rt1multirobot");
     bool pass_through = this->get_parameter("pass_through").as_bool();
 
     instruction_ = this->get_parameter("default_instruction").as_string();
     auto world_frame = this->get_parameter("world_frame").as_string();
+    auto model_key = this->get_parameter("model_key").as_string();
 
     visual_tools_ = std::make_shared<rviz_visual_tools::RvizVisualTools>(world_frame,
                                                                          "/rviz_visual_markers",
@@ -34,30 +36,30 @@ namespace r2t
     // TODO(speralta): Do not do this with the pybind11 embedded interpreter.
     inference_ = py::module::import(
       "robo_transformers.inference_server").attr(
-      "InferenceServer")(py::arg("pass_through") = pass_through);
+      "InferenceServer")(py::arg("model_key") = model_key, py::arg("pass_through") = pass_through);
     mp_gil_release_                              = std::make_unique<py::gil_scoped_release>();
   }
 
   VLA::Feedback::SharedPtr RT1::actionFromObs(std::shared_ptr<RT1Observer>observer)
   {
     auto [id, msg] = observer->observe();
-    RCLCPP_WARN(this->get_logger(), "img len %d", msg->data.size());
+    RCLCPP_WARN(this->get_logger(), "img len %i", msg->data.size());
 
     // convert msg from Image to numpy array
     std::vector<std::vector<std::array<uint8_t, 3> > > image;
 
-    for (int i = 0; i < msg->width; i++)
+    for (int i = 0; i < msg->height; i++)
     {
-      image.push_back(std::vector<std::array<uint8_t, 3> >(msg->height));
+      image.push_back(std::vector<std::array<uint8_t, 3> >(msg->width));
 
-      for (int j = 0; j < msg->height; j++)
+      for (int j = 0; j < msg->width; j++)
       {
         image[i][j] = std::array<uint8_t, 3>();
 
         for (int k = 0; k < 3; k++)
         {
           // RCLCPP_WARN(this->get_logger(), "i: %d, j: %d, k: %d", i, j, k);
-          image[i][j][k] = msg->data[i * msg->height * 3 + j * 3 + k];
+          image[i][j][k] = msg->data[i * msg->width * 3 + j * 3 + k];
         }
       }
     }
