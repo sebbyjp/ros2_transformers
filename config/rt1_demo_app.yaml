@@ -1,6 +1,6 @@
 use_sim_time: true 
 num_iterations: 100
-sleep_time_ms: 100
+sleep_ms: 100
 action_scale: 1.0
 avoid_collisions: false
 instruction: "pick up the top block on the stack"

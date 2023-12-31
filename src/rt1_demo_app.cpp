@@ -81,7 +81,7 @@ public:
     this->declare_parameter("avoid_collisions", true);
 
     // Sleep time between actions in milliseconds.
-    this->declare_parameter("sleep_ms", 100); 
+    this->declare_parameter("sleep_ms", 100);
 
     timeout_ = chrono::milliseconds(get_param<int>("timeout_ms"));
     action_client_->wait_for_action_server(timeout_);
@@ -101,12 +101,12 @@ public:
       arm_group_);
     move_arm_group_->setGoalOrientationTolerance(0.1);
     move_arm_group_->setGoalPositionTolerance(0.02);
+
     // move_arm_group_->setWorkspace(0.1, -2.0, 0.05, 2.0, 2.0, 2.0);
-    
+
     move_hand_group_ = std::make_unique<moveit::planning_interface::MoveGroupInterface>(
       std::shared_ptr<rclcpp::Node>(this),
       hand_group_);
-    
   }
 
   bool move_hand(const typename ActionT::Feedback& action);
@@ -117,13 +117,11 @@ public:
     typename rclcpp_action::ClientGoalHandle<ActionT>::SharedPtr    gh,
     const typename std::shared_ptr<const typename ActionT::Feedback>fb);
 
-  template <typename T>
+  template<typename T>
   const T get_param(const std::string& name)
   {
     return this->get_parameter(name).get_value<T>();
   }
-
-  
 
   void goal_response_callback(
     const typename rclcpp_action::ClientGoalHandle<ActionT>::SharedPtr& goal_handle)
@@ -195,16 +193,16 @@ void RTXAgentClient<VLA>::feedback_callback(
   action_ready = true;
 }
 
-// TODO(speralta): Make more general by passing in current openness -> joint_names + values function
+// TODO(speralta): Make more general by passing in current openness ->
+// joint_names + values function
 template<>
 bool RTXAgentClient<VLA>::move_hand(const VLA::Feedback& action)
 {
-  RCLCPP_ERROR(logger(), "move_hand began");
-  RCLCPP_ERROR(logger(), "finger_joint_min_: %f",   finger_joint_min_);
-  RCLCPP_ERROR(logger(), "finger_joint_max_: %f",   finger_joint_max_);
-  RCLCPP_ERROR(logger(), "left_finger_joint_: %s",  left_finger_joint_.c_str());
-  RCLCPP_ERROR(logger(), "right_finger_joint_: %s", right_finger_joint_.c_str());
-  RCLCPP_ERROR(logger(), "move_hand_group_: %s",    move_hand_group_->getName().c_str());
+  RCLCPP_WARN(logger(), "move_hand began");
+  RCLCPP_WARN(logger(), "finger_joint_max_: %f",   finger_joint_max_);
+  RCLCPP_WARN(logger(), "left_finger_joint_: %s",  left_finger_joint_.c_str());
+  RCLCPP_WARN(logger(), "right_finger_joint_: %s", right_finger_joint_.c_str());
+  RCLCPP_WARN(logger(), "move_hand_group_: %s",    move_hand_group_->getName().c_str());
 
 
   // move_hand_group_->setStartStateToCurrentState();
@@ -217,8 +215,8 @@ bool RTXAgentClient<VLA>::move_hand(const VLA::Feedback& action)
   const double current_openness = scale(
     current_finger_joint_value, finger_joint_min_,
     finger_joint_max_);
-  
-  const double target_openness = 
+
+  const double target_openness =
     current_openness + action.gripper_closedness_action;
 
   RCLCPP_INFO(
@@ -235,35 +233,41 @@ bool RTXAgentClient<VLA>::move_hand(const VLA::Feedback& action)
 
 
   moveit_msgs::msg::RobotTrajectory trajectory;
+
   trajectory.joint_trajectory.joint_names.push_back(left_finger_joint_);
   trajectory.joint_trajectory.joint_names.push_back(right_finger_joint_);
 
   trajectory_msgs::msg::JointTrajectoryPoint current;
+
   current.positions.push_back(current_finger_joint_value);
   current.positions.push_back(-current_finger_joint_value);
-  
+
   trajectory.joint_trajectory.points.push_back(current);
 
   trajectory_msgs::msg::JointTrajectoryPoint target;
+
   target.time_from_start = rclcpp::Duration::from_seconds(0.01);
   target.positions.push_back(target_finger_joint_value);
   target.positions.push_back(-target_finger_joint_value);
   trajectory.joint_trajectory.points.push_back(target);
 
   moveit::core::MoveItErrorCode result_status = move_hand_group_->execute(trajectory);
-  const auto toc = chrono::steady_clock::now();
+  const auto toc                              = chrono::steady_clock::now();
+
   RCLCPP_INFO(logger(),
               "move_hand status: %s took %i ms",
               moveit::core::error_code_to_string(result_status).c_str(),
               TIME_DIFF(tic, toc));
-  // move_hand_group_->setJointValueTarget(left_finger_joint_,  target_finger_joint_value);
-  // move_hand_group_->setJointValueTarget(right_finger_joint_, -target_finger_joint_value);
+
+  // move_hand_group_->setJointValueTarget(left_finger_joint_,
+  //  target_finger_joint_value);
+  // move_hand_group_->setJointValueTarget(right_finger_joint_,
+  // -target_finger_joint_value);
 
   // // Create a plan to the target.
   // const auto [success, plan] = [this] {
-   
-    
-    
+
+
   //                        moveit::planning_interface::MoveGroupInterface::Plan
   // msg;
   //                                auto const ok =
@@ -291,6 +295,7 @@ template<>
 bool RTXAgentClient<VLA>::move_arm(const VLA::Feedback& action)
 {
   auto action_scale = get_param<double>("action_scale");
+
   // move_arm_group_->setStartStateToCurrentState();
   const auto tic = chrono::steady_clock::now();
 
@@ -322,77 +327,108 @@ bool RTXAgentClient<VLA>::move_arm(const VLA::Feedback& action)
 
   log_pose("Current", current_pose, current_rpy);
 
-  const auto [target_pose, target_rpy] = [&action, &current_pose, &current_rpy, &action_scale, this]{
-                                           const std::vector<double> target_xyz = {
-                                             current_pose.pose.position.x + action_scale *
-                                             action.world_vector[0],
-                                             current_pose.pose.position.y + action_scale *
-                                             action.world_vector[1],
-                                             current_pose.pose.position.z + action_scale *
-                                             action.world_vector[2] };
+  const auto [target_pose,
+              target_rpy] = [&action, &current_pose, &current_rpy, &action_scale, this] {
+                              const std::vector<double> target_xyz = {
+                                current_pose.pose.position.x + action_scale *
+                                action.world_vector[0],
+                                current_pose.pose.position.y + action_scale *
+                                action.world_vector[1],
+                                current_pose.pose.position.z + action_scale *
+                                action.world_vector[2] };
 
-                                           const std::vector<double> target_rpy = {
-                                             current_rpy[0] + action_scale *
-                                             action.rotation_delta[0],
-                                             current_rpy[1] + action_scale *
-                                             action.rotation_delta[1],
-                                             current_rpy[2] + action_scale *
-                                             action.rotation_delta[2] };
+                              const std::vector<double> target_rpy = {
+                                current_rpy[0] + action_scale *
+                                action.rotation_delta[0],
+                                current_rpy[1] + action_scale *
+                                action.rotation_delta[1],
+                                current_rpy[2] + action_scale *
+                                action.rotation_delta[2] };
 
-                                           geometry_msgs::msg::PoseStamped target;
+                              geometry_msgs::msg::PoseStamped target;
 
-                                           target.header.frame_id = world_frame_;
-                                           target.header.stamp    = current_pose.header.stamp;
+                              target.header.frame_id = world_frame_;
+                              target.header.stamp    = current_pose.header.stamp;
 
-                                           target.pose = poseFromXYZRPY(
-                                             { target_xyz[0], target_xyz[1], target_xyz[2],
-                                               target_rpy[0], target_rpy[1],
-                                               target_rpy[2] });
-                                           return std::make_pair(target, target_rpy);
-                                         }();
+                              target.pose = poseFromXYZRPY(
+                                { target_xyz[0], target_xyz[1], target_xyz[2],
+                                  target_rpy[0], target_rpy[1],
+                                  target_rpy[2] });
+                              return std::make_pair(target, target_rpy);
+                            }();
 
   log_pose("Target", target_pose, target_rpy);
 
-  // move_arm_group_->setPoseTarget(target_pose);
 
-  // // Create a plan to that target pose
-  // const auto [success, plan] = [this] {
-  //  
-  //   
-  //   
-  //                        moveit::planning_interface::MoveGroupInterface::Plan
-  // msg;
-  //                                auto const ok =
-  // static_cast<bool>(move_arm_group_->plan(msg));
+  // Create a plan to that target pose
+  const auto [success, plan] = [this, &target_pose] {
+                                 const auto tic = chrono::steady_clock::now();
 
-  //                                return std::make_pair(ok, msg);
-  //                              }();
-  moveit_msgs::msg::RobotTrajectory trajectory;
-  std::vector<geometry_msgs::msg::Pose> waypoints;
+                                 // move_arm_group_->setPoseTarget(target_pose);
 
-  waypoints.push_back(target_pose.pose);
-  move_arm_group_->computeCartesianPath(waypoints, 0.01, 0.0, trajectory, get_param<bool>("avoid_collisions"));
-  const auto toc = chrono::steady_clock::now();
+                                 // moveit::planning_interface::MoveGroupInterface::Plan
+                                 //  msg;
+                                 // const bool ok  =
+                                 //   static_cast<bool>(move_arm_group_->plan(msg));
 
-  moveit::core::MoveItErrorCode result_status = move_arm_group_->execute(trajectory);
+                                 moveit_msgs::msg::RobotTrajectory trajectory;
+                                 std::vector<geometry_msgs::msg::Pose> waypoints;
 
-  RCLCPP_INFO(logger(),
-              "move_arm status: %s took %i ms",
-              moveit::core::error_code_to_string(result_status).c_str(),
-              TIME_DIFF(tic, toc));
-  return result_status == moveit::core::MoveItErrorCode::SUCCESS;
+                                 waypoints.push_back(target_pose.pose);
+                                 const float distance = move_arm_group_->computeCartesianPath(
+                                   waypoints,
+                                   0.01,
+                                   0.0,
+                                   trajectory,
+                                   get_param<bool>(
+                                     "avoid_collisions"));
+                                 const bool ok = distance    > 0;
+
+                                 const auto toc = chrono::steady_clock::now();
+
+                                 if (ok)
+                                 {
+                                   RCLCPP_WARN(logger(),
+                                               "move_arm planned in %i ms SUCCESS",
+                                               TIME_DIFF(tic, toc));
+                                 }
+                                 else
+                                 {
+                                   RCLCPP_ERROR(logger(),
+                                                "move_arm planned in %i ms FAILED",
+                                                TIME_DIFF(tic, toc));
+                                 }
+
+                                 return std::make_pair(ok, trajectory);
+                               }();
+
 
   // Execute the plan
-  //   if (success)
-  //   {
-  //     move_arm_group_->execute(plan);
-  //     return success;
-  //   }
-  //   else
-  //   {
-  //     RCLCPP_ERROR(logger(), "Planning failed!");
-  //   }
-  //   return false;
+  moveit::core::MoveItErrorCode result_status = moveit::core::MoveItErrorCode::FAILURE;
+
+  if (success)
+  {
+    moveit::core::MoveItErrorCode result_status = move_arm_group_->execute(plan);
+  }
+
+  const auto toc = chrono::steady_clock::now();
+
+  if (result_status == moveit::core::MoveItErrorCode::SUCCESS)
+  {
+    RCLCPP_WARN(logger(),
+                "move_arm status: %s in %i ms ",
+                moveit::core::error_code_to_string(result_status).c_str(),
+                TIME_DIFF(tic, toc));
+    return true;
+  }
+  else
+  {
+    RCLCPP_ERROR(logger(),
+                 "move_arm status: %s in %i ms ",
+                 moveit::core::error_code_to_string(result_status).c_str(),
+                 TIME_DIFF(tic, toc));
+    return false;
+  }
 }
 
 template<>
@@ -400,7 +436,7 @@ bool RTXAgentClient<VLA>::act(planning_scene_monitor::PlanningSceneMonitor& psm)
 {
   const auto tic = chrono::steady_clock::now();
 
-  // psm.updateFrameTransforms();
+  psm.updateFrameTransforms();
   psm.clearOctomap(); // Don't worry about colliding with octomap.
 
   auto goal = VLA::Goal();
