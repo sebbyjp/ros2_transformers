@@ -88,7 +88,7 @@ def generate_launch_description() -> LaunchDescription:
         x,
         y,
         z,
-        xacro_args='color:=red')
+        xacro_args='color:=green')
 
     x, y, z, _, _, _ = task_config['block2_pose']
     spawn_block2 = spawn_create_item_node(
@@ -100,7 +100,7 @@ def generate_launch_description() -> LaunchDescription:
         x,
         y,
         z,
-        xacro_args='color:=green')
+        xacro_args='color:=yellow')
     x, y, z, _, _, _ = task_config['block3_pose']
     spawn_block3 = spawn_create_item_node(
         'block3',
@@ -111,7 +111,7 @@ def generate_launch_description() -> LaunchDescription:
         x,
         y,
         z,
-        xacro_args='color:=yellow')
+        xacro_args='color:=red')
 
     # Examples: https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge
     bridge = Node(      
@@ -168,6 +168,7 @@ def generate_launch_description() -> LaunchDescription:
         parameters=[
             app_config
         ],
+        # ros_arguments=['--log-level', LaunchConfiguration('debug')],
     )
 
     return LaunchDescription([

@@ -44,21 +44,21 @@ spawn_objs: ["block3", "block2", "block1"]
 # block3_place_pose: [0.35, 0.2,0, 0, 0, 0]
 block1_name: "block1"
 block1_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
-block1_pose: [0.52, -0.1, 0.013, 0, 0, 0]
+block1_pose: [0.5, -0.1, 0.013, 0, 0, 0]
 block1_place_pose: [0.3, 0.2,  0.063, 0, 0, 0]
 block1_start_surface: "table"
 block1_end_surface: "block2"
 
 block2_name: "block2"
 block2_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
-block2_pose: [0.52, -0.1, 0.039, 0, 0, 0]
+block2_pose: [0.5, -0.1, 0.039, 0, 0, 0]
 block2_place_pose: [0.3, 0.2, 0.039, 0, 0, 0]
 block2_start_surface: "block1"
 block2_end_surface: "block3"
 
 block3_name: "block3"
 block3_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
-block3_pose: [0.52, -0.1, 0.063, 0, 0, 0]
+block3_pose: [0.5, -0.1, 0.063, 0, 0, 0]
 block3_place_pose: [0.3, 0.2,0.013, 0, 0, 0]
 block3_start_surface: "block2"
 block3_end_surface: "table"
@@ -70,21 +70,21 @@ table_dimensions: [0.4, 0.5, 0.00002]  # [length, width, height]
 table_pose: [0.4, 0,0.00001, 0, 0, 0]
 # table_pose: [0.5, 0, 0, 0, 0, 0]
 
-# Gripper grasp frame transform [x,y,z,r,p,y]
-# grasp_frame_transform: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-grasp_frame_transform: [0.05, 0, 0, 0, -1.57, 0]
-# Place pose [x,y,z,r,p,y]
-# place_pose: [0.5, 0.3, 0, 0, 0, 0]
+# # Gripper grasp frame transform [x,y,z,r,p,y]
+# # grasp_frame_transform: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+# grasp_frame_transform: [0.05, 0, 0, 0, -1.57, 0]
+# # Place pose [x,y,z,r,p,y]
+# # place_pose: [0.5, 0.3, 0, 0, 0, 0]
 
-place_surface_offset: 0.002 # place offset from table
+# place_surface_offset: 0.002 # place offset from table
 
-# Valid distance range when approaching an object for picking
-approach_object_min_dist: 0.05
-approach_object_max_dist: 0.1
+# # Valid distance range when approaching an object for picking
+# approach_object_min_dist: 0.05
+# approach_object_max_dist: 0.1
 
-lower_object_min_dist: 0.05
-lower_object_max_dist: 0.1
+# lower_object_min_dist: 0.05
+# lower_object_max_dist: 0.1
 
-# Valid height range when lifting an object after pick
-lift_object_min_dist: 0.03
-lift_object_max_dist: 0.1
+# # Valid height range when lifting an object after pick
+# lift_object_min_dist: 0.03
+# lift_object_max_dist: 0.1
