@@ -70,6 +70,23 @@ target_include_directories(rt1 PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
 
+add_executable(octo
+    src/octo.cpp
+)
+ament_target_dependencies(octo PUBLIC
+    rclcpp
+    dgl_ros_interfaces
+    dgl_ros
+    sensor_msgs
+    rviz_visual_tools
+)
+target_link_libraries(octo PUBLIC
+    ${Python_LIBRARIES}
+    ${pybind11_LIBRARIES})
+target_include_directories(octo PUBLIC
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+    "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
+
 add_executable(rt1_demo_scene
     src/rt1_demo_scene.cpp
 )
@@ -99,7 +116,7 @@ target_include_directories(rt1_demo_scene PUBLIC
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
     
 install(TARGETS
-    rt1 rt1_demo_scene rt1_demo_app
+    rt1 octo rt1_demo_scene rt1_demo_app
     EXPORT export_${PROJECT_NAME}
     RUNTIME DESTINATION lib/${PROJECT_NAME}
     LIBRARY DESTINATION lib
@@ -112,6 +129,9 @@ install(DIRECTORY
 launch
 tasks
 config
+sim
+robots
+moveit
     DESTINATION share/${PROJECT_NAME}
 )
 

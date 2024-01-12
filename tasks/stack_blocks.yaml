@@ -1,0 +1,20 @@
+ -  spawn: true
+    name: block
+    path: sim/object_descriptions/urdf/objects/block.urdf.xacro
+    count: 3
+    stacked: true
+    colors: ["red", "green", "blue"]
+    lwh: [0.0254, 0.0254, 0.0254] 
+    poses: # x, y, z, roll, pitch, yaw
+    - [0.45, 0.2, 0.2513, 0, 0, 0]
+    - [0.45, -0.2, 0.2513, 0, 0, 0]
+    - [0.45, 0, 0.2513, 0, 0, 0]
+
+ -  spawn: true
+    name: table
+    path: sim/object_descriptions/urdf/objects/table.urdf.xacro
+    count: 1
+    lwh: [0.4, 0.5, 0.2]
+    poses:
+    -  [0.4, 0,0.1, 0, 0, 0]
+    colors: [black]

@@ -1,0 +1,65 @@
+# sensors:
+#   - rgbd_sensor
+# rgbd_sensor:
+#   sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
+#   point_cloud_topic: /rgbd_camera/points
+#   filtered_cloud_topic: filtered_cloud
+#   queue_size: 10
+#   max_range: 5.0
+#   # Choose one of every 'point_subsample' points (select all if set to 1).
+#   point_subsample: 4
+#   # Should always be >= 1.0. Scale up collision shapes in the scene before excluding them from the octomap.
+#   padding_scale: 1.0
+#   # Absolute padding around scaled collision shapes when excluding them from the octomap (in meters).
+#   padding_offset: 0.05
+#   # The octomap representation will be updated at rate less than or equal to this value.
+#   max_update_rate: 1.0
+
+#   # sensor_plugin: occupancy_map_monitor/DepthImageOctomapUpdater
+#   # image_topic: /rgbd_camera/depth_image
+#   # queue_size: 5
+#   # near_clipping_plane_distance: 0.01
+#   # far_clipping_plane_distance: 10.0
+#   # shadow_threshold: 0.2
+#   # padding_offset: 0.03
+#   # max_update_rate: 1.0
+#   # max_range: 10.0
+# octomap_resolution: 0.005
+# # Specifies the coordinate frame in which the Octomap representation will be stored.
+# # Note! When an OccupancyMonitor instance is initialized by the PlanningSceneMonitor,
+# # this frame parameter will not be used. Instead, the frame defaults to the planning frame.
+# octomap_frame: "world"
+
+
+# sensors:
+#   - rgbd_sensor
+# rgbd_sensor:
+#   enabled: false
+#   sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
+#   point_cloud_topic: /rgbd_camera/points
+#   filtered_cloud_topic: filtered_cloud
+#   queue_size: 10
+#   max_range: 5.0
+#   # Choose one of every 'point_subsample' points (select all if set to 1).
+#   point_subsample: 4
+#   # Should always be >= 1.0. Scale up collision shapes in the scene before excluding them from the octomap.
+#   padding_scale: 1.0
+#   # Absolute padding around scaled collision shapes when excluding them from the octomap (in meters).
+#   padding_offset: 0.05
+#   # The octomap representation will be updated at rate less than or equal to this value.
+#   max_update_rate: 10.0
+
+  # sensor_plugin: occupancy_map_monitor/DepthImageOctomapUpdater
+  # image_topic: /rgbd_camera/depth_image
+  # queue_size: 5
+  # near_clipping_plane_distance: 0.01
+  # far_clipping_plane_distance: 10.0
+  # shadow_threshold: 0.2
+  # padding_offset: 0.03
+  # max_update_rate: 1.0
+  # max_range: 10.0
+octomap_resolution: 0.005
+# Specifies the coordinate frame in which the Octomap representation will be stored.
+# Note! When an OccupancyMonitor instance is initialized by the PlanningSceneMonitor,
+# this frame parameter will not be used. Instead, the frame defaults to the planning frame.
+octomap_frame: "world"

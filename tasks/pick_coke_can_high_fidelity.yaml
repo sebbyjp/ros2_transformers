@@ -1,0 +1,35 @@
+ -  spawn: true
+    name: coke_can
+    path: sim/third_party/coke_can/model.sdf
+    count: 1
+    colors: [black]
+    lwh: [0,0,0]
+    poses: # x, y, z, roll, pitch, yaw
+    - [0.47, -0.1, 1.0, 0, 0, 0]
+
+ -  spawn: true
+    name: table
+    path: sim/third_party/Table/model.sdf
+    count: 1
+    lwh: [0.4, 0.5, 0.2]
+    poses:
+    -  [1.15, 0,0.1, 0, 0, 0]
+    colors: [grey]
+
+ -  spawn: true
+    name: platform
+    path: sim/object_descriptions/urdf/objects/table.urdf.xacro
+    count: 1
+    lwh: [0.4, 0.5, 0.9]
+    poses:
+    -  [0, 0,0.4, 0, 0, 0]
+    colors: [grey]
+
+ -  spawn: true
+    name: cafe
+    path: sim/third_party/Cafe/model.sdf
+    count: 1
+    lwh: [10, 10, 2]
+    poses:
+    -  [0, 0, 0, 0, 0, 0]
+    colors: [grey]

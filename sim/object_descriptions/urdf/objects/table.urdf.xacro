@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot name="table" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="x" default="0" />
+  <xacro:arg name="y" default="0" />
+  <xacro:arg name="z" default="0" />
+  <xacro:arg name="l" default="0.4" />
+  <xacro:arg name="h" default="0.2" />
+  <xacro:arg name="w" default="0.5" />
+  <xacro:arg name="color" default="blue" />
+  <link name="table">
+    <inertial>
+      <origin xyz="$(arg x) $(arg y) $(arg z)" />
+      <mass value="10.0" />
+      <inertia ixx="10.0" ixy="0.0" ixz="0.0" iyy="10.0" iyz="0.0" izz="10.0" />
+    </inertial>
+    <visual>
+      <origin xyz="$(arg x) $(arg y) $(arg z)" />
+      <geometry>
+        <box size="$(arg l) $(arg w) $(arg h)" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="$(arg x) $(arg y) $(arg z)" />
+      <geometry>
+        <box size="$(arg l) $(arg w) $(arg h)" />
+      </geometry>
+    </collision>
+    <surface>
+      <friction>
+        <ode>
+          <mu>100</mu>
+          <mu2>100</mu2>
+        </ode>
+      </friction>
+    </surface>
+  </link>
+  <gazebo reference="table">
+    <visual>
+      <material>
+        <xacro:include filename="$(find ros2_transformers)/sim/object_descriptions/urdf/colors.urdf.xacro" />
+        <xacro:color color="$(arg color)" />
+      </material>
+    </visual>
+  </gazebo>
+</robot>

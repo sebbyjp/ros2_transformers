@@ -1,0 +1,30 @@
+elbow: 0.75
+forearm_roll: 0
+shoulder: -0.6
+waist: -0.7
+wrist_angle: 0
+wrist_rotate: 0
+left_finger: 0
+right_finger: 0
+pan: 0
+tilt: 0.8
+
+# elbow: 1.55 
+# forearm_roll: 0 
+# shoulder: -1.1
+# waist: 0 
+# wrist_angle: 0.5
+# wrist_rotate: 0 
+# left_finger: 0.0195
+# right_finger: -0.0195
+# pan: 0
+# tilt: 0.8
+
+
+        # <joint name="elbow" value="0" />
+        # <joint name="forearm_roll" value="0" />
+        # <joint name="shoulder" value="0" />
+        # <joint name="waist" value="0" />
+        # <joint name="wrist_angle" value="0" />
+        # <joint name="wrist_rotate" value="0" />
+

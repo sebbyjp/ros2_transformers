@@ -7,10 +7,13 @@
   <maintainer email="peraltas@seas.upenn.edu"></maintainer>
   <license>MIT</license>
 
+  <depend>generate_parameter_library</depend>
+
   <exec_depend>moveit</exec_depend>
   <exec_depend>moveit_core</exec_depend>
   <exec_depend>moveit_ros_planning</exec_depend>
   <exec_depend>dgl_ros_models</exec_depend>
+  
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <test_depend>ament_lint_auto</test_depend>

@@ -20,13 +20,18 @@ namespace r2t
     this->declare_parameter("default_instruction", "pick block");
 
     // Whether or not to load the inference server or just pass through.
-    this->declare_parameter("pass_through", true);
-    this->declare_parameter("model_key", "rt1multirobot");
-    bool pass_through = this->get_parameter("pass_through").as_bool();
+    this->declare_parameter("dummy", false);
+    this->declare_parameter("weights_key", "rt1multirobot");
+    this->declare_parameter("model_type", "rt1");
+    // Initialize parameters
+    bool dummy = this->get_parameter("dummy").as_bool();
 
     instruction_ = this->get_parameter("default_instruction").as_string();
     auto world_frame = this->get_parameter("world_frame").as_string();
-    auto model_key = this->get_parameter("model_key").as_string();
+    auto weights_key = this->get_parameter("weights_key").as_string();
+    auto model_type  = this->get_parameter("model_type").as_string();
+
+    // Initialize rviz_visual_tools
 
     visual_tools_ = std::make_shared<rviz_visual_tools::RvizVisualTools>(world_frame,
                                                                          "/rviz_visual_markers",
@@ -36,14 +41,13 @@ namespace r2t
     // TODO(speralta): Do not do this with the pybind11 embedded interpreter.
     inference_ = py::module::import(
       "robo_transformers.inference_server").attr(
-      "InferenceServer")(py::arg("model_key") = model_key, py::arg("pass_through") = pass_through);
+      "InferenceServer")(py::arg("model_type") = model_type, py::arg("weights_key") = weights_key, py::arg("dummy") = dummy);
     mp_gil_release_                              = std::make_unique<py::gil_scoped_release>();
   }
 
   VLA::Feedback::SharedPtr RT1::actionFromObs(std::shared_ptr<RT1Observer>observer)
   {
     auto [id, msg] = observer->observe();
-    RCLCPP_WARN(this->get_logger(), "img len %i", msg->data.size());
 
     // convert msg from Image to numpy array
     std::vector<std::vector<std::array<uint8_t, 3> > > image;
@@ -58,7 +62,6 @@ namespace r2t
 
         for (int k = 0; k < 3; k++)
         {
-          // RCLCPP_WARN(this->get_logger(), "i: %d, j: %d, k: %d", i, j, k);
           image[i][j][k] = msg->data[i * msg->width * 3 + j * 3 + k];
         }
       }
@@ -69,13 +72,10 @@ namespace r2t
 
     // TODO(speralta): Read in onnx module and run inference
     py::gil_scoped_acquire acquire;
-    py::dict result = inference_(instruction_,
-                                 py::cast(image),
-                                 py::arg("save") = visualize);
+    py::dict result = inference_(visualize,
+                                 py::arg("instruction") =instruction_,
+                                    py::arg("image") =           py::cast(image));
 
-    // auto world_vector =
-    //  
-    // result["world_vector"].attr("numpy")().attr("squeeze")().cast<Eigen::Vector3f>();
     auto world_vector =
       result["world_vector"].attr("squeeze")().cast<Eigen::Vector3f>();
 
@@ -85,9 +85,6 @@ namespace r2t
     feedback->world_vector[1]           = world_vector[1];
     feedback->world_vector[2]           = world_vector[2];
 
-    // auto rotation_delta =
-    //  
-    // result["rotation_delta"].attr("numpy")().attr("squeeze")().cast<Eigen::Vector3f>();
     auto rotation_delta =
       result["rotation_delta"].attr("squeeze")().cast<Eigen::Vector3f>();
 
