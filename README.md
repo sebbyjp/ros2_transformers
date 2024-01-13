@@ -23,7 +23,7 @@ ROS2 package for deploying and fine-tuning multi-modal generalist agent models. 
 - Tensorflow or PyTorch for inference and training (Python) (See [robo_transformers](https://github.com/sebbyjp/robo_transformers))
 - ONNX or OpenVino for high performance inference and training (C++)
 
-The following layers are usually part of the user’s robot stack but we include them to support robots out-of-the-box for users who only have actuator driver or ROS control API’s from the manufacturer (Note that ROS control makes calls to the driver APIs). These layers are only required at all because current foundational models for robotics output to action spaces like position or velocity of a robots arms and feet. Once foundational models begin outputting to input spaces for each of these layers, and ultimately to API calls to the hardware drivers, they become redundant:
+The following layers are usually part of the user’s robot stack but we include them to support robots out-of-the-box for users who only have actuator driver or ROS control API’s from the manufacturer (Note that ROS control makes calls to the driver APIs). These layers are only required at all because current foundational models for robotics output to action spaces like position or velocity of a robots arms and feet. Once foundational models begin outputting to input spaces for each of these layers (first joint angles then motor torques), they become redundant.
 
 ### 3. Kinematics Layer
 
