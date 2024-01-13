@@ -1,8 +1,27 @@
 # ROS2 Transformers
 
-ROS2 package for deploying and fine-tuning multi-modal generalist agent models. This package provides inference servers as [ROS2 action servers](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html) for the most popular generalist multimodal robotics models (see the next section). It depends on [robo_transformers](https://github.com/sebbyjp/robo_transformers) to access and run inference for these models.
+ROS2 package for deploying and fine-tuning multi-modal generalist agent models. This package provides inference servers as [ROS2 action servers](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html) for the most popular generalist multimodal robotics models (see [Available Models](#available-models). It depends on [robo_transformers](https://github.com/sebbyjp/robo_transformers) to access and run inference for these models.
 
-## Available Models
+## Table of Contents
+
+- [ROS2 Transformers](#ros2-transformers)
+  - [Table of Contents](#table-of-contents)
+  - [Tested Platforms](#tested-platforms)
+  - [Available Models](#available-models)
+  - [Installation](#installation)
+  - [Repo Structure](#repo-structure)
+  - [Software Stack](#software-stack)
+    - [1. Application Layer (your code)](#1-application-layer-your-code)
+    - [2. ROS Agent Layer (called by your code)](#2-ros-agent-layer-called-by-your-code)
+    - [2. AI Agent Layer](#2-ai-agent-layer)
+    - [3. Kinematics Layer](#3-kinematics-layer)
+    - [4. Controller Layer](#4-controller-layer)
+  
+## Tested Platforms
+
+- :white_check_mark: Ubuntu 22.04 + ROS2 Humble
+
+## [Available Models](#available-models)
 
 | Model Type |  Variants | Observation Space | Action Space | Author |
 | ---------- | --------- | ------- | ------- | ------- |
@@ -10,13 +29,28 @@ ROS2 package for deploying and fine-tuning multi-modal generalist agent models. 
 | [RT-1-X](https://robotics-transformer-x.github.io/)  | rt1x   | text + head camera | end effector pose delta |  Google Research et al., 2023 |
 | [Octo](https://github.com/octo-models/octo) | octo-base, octo-small | text + head camera + Optional[wrist camera] | end effector pose delta |  Octo Model Team et al., 2023 |
 
-## Code Structure
+## Installation
 
-### 1. Application Layer (called by your code)
+In a term
+
+## Repo Structure
+
+- ``config``: Contains configuration files for the application, ros_gz bridge, and rviz gui.
+- ``moveit``: Contains MoveIt configuration files that are not specific to a robot.
+- ``robots``: Contains robot specific files such as urdfs, meshes, ros_controllers, and robot-specific moveit configurations.
+- ``tasks``: Contains task specifications (location and properties of objects in the environment) in yaml format.
+- ``sim``: Contains simulation assets for tasks and gazebo world files.
+
+## Software Stack
+
+### 1. Application Layer (your code)
+
+- See `src/demo_app.cpp` and `launch/task_launch.py` for an example of how to use this package.
+
+### 2. ROS Agent Layer (called by your code)
 
 - Agent Inference Server (C++ or Python) (See [dgl_ros](https://github.com/sebbyjp/dgl_ros)).
-- Dataset Generator Server (C++ or Python)
-- Online Trainer (C++ or Python)
+- See `include/rt1.cpp` and `include/octo.cpp`
 
 ### 2. AI Agent Layer
 

@@ -1,6 +1,0 @@
-#STRAWBERRY
-spawn_mesh: true
-object_name: "object"
-object_mesh_file: "package://ros2_transformers/meshes/objects/strawberry.dae"
-object_dimensions: [0.02, 0.02]  # [radius]
-object_pose: [0.5, -0.15, 0.1, 0, 0, 0]
