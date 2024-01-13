@@ -1,0 +1,88 @@
+# Total planning attempts
+max_solutions: 0
+
+# Planning group and link names
+arm_group_name: "interbotix_arm"
+eef_name: "interbotix_hand"
+hand_group_name: "interbotix_hand"
+hand_frame: "locobot_fingers_link"
+
+# Poses
+hand_open_pose: "Open"
+hand_close_pose: "Closed"
+arm_home_pose: "Sleep"
+
+# Scene frames
+world_frame: "world"
+table_reference_frame: "world"
+object_reference_frame: "world"
+camera_reference_frame: "world"
+bowl_reference_frame: "world"
+surface_link: "table"
+
+
+
+# Camera collision object
+spawn_camera: false
+camera_name: "camera"
+camera_mesh_file: "package://ros2_transformers/meshes/camera/kinect.dae"
+camera_pose: [0.5, 0, 0.7, 0, 0, 0] # side
+# camera_pose: [0.5, 0, 0.7, 0, 1.571, 1.571] # over head
+
+# Table model
+spawn_table: true # true
+table_name: "table"
+table_dimensions: [0.65, 0.7, 0.05]  # [length, width, height]
+table_pose: [0.55, 0, 0.05, 0, 0, 0]
+
+
+# Gripper grasp frame transform [x,y,z,r,p,y]
+# grasp_frame_transform: [0, 0, 0.1, 1.571, 0.785, 1.571]
+# grasp_frame_transform: [0.015, 0, 0.05, 0, 0, 0]
+grasp_frame_transform: [0, 0, 0, 0, 0, 0]
+
+spawn_ladle1: true
+ladle1_dimensions: [0.06, 0.02]
+ladle1_pose: [0.43, -0.15, 0.16, 0,1.571,0]
+
+# ladle1_pose: [0.32, -0.1, 0.3, -1.571, 0, 1.571]
+ladle1_name: "ladle1"
+# ladle1_grasp_pose:  [0.43, -0.15, 0.23, 0,1.571,0]
+ladle1_grasp_pose:  [0.43, -0.15, 0.23, 3.14,-1.571,0]
+ladle1_pre_pour_pose: [0.32, -0.18, 0.35, -1.571, 0,1.571]
+ladle1_pour_pose: [0.32, -0.18, 0.35, -1.571, 0, 0]
+
+# ladle1_pre_pour_pose: [0.32, -0.15, 0.35, -1.571, 0, 1.5]
+# ladle1_pour_pose: [0.32, -0.15, 0.35, -1.571, 0, -0.5]
+ladle1_place_pose:  [0.43, -0.15, 0.23, 0,1.571,0]
+
+spawn_ladle2: true
+ladle2_dimensions: [0.06, 0.02]
+ladle2_pose: [0.39, 0.118, 0.204, 0, 1.571, 0]
+ladle2_name: "ladle2"
+ladle2_grasp_pose:  [0.39, 0.118, 0.23, 0,1.571, 0]
+# ladle2_grasp_pose:  [0.44, 0.13, 0.2, 0,1.571, 0]
+ladle2_pre_pour_pose: [0.32, 0.18, 0.32, 1.571, 0,-1.571]
+# ladle2_pour_pose:  [0.32, 0.18, 0.32, 1.571, 0,-1.571]
+ladle2_pour_pose: [0.32, 0.18, 0.32, 1.571, 0, 0]
+# ladle2_pre_pour_pose: [0.32, -0.18, 0.35, -1.571, 0,1.571]
+# ladle2_pour_pose: [0.32, -0.18, 0.35, -1.571, 0, 0]
+
+ladle2_place_pose: [0.44, 0.13, 0.15, 0, 1.571, 0]
+
+spawn_mustard: true
+mustard_pose: [0.3, 0.2, 0.05, 0, 0, 0]
+mustard_grasp_pose: [0.28, 0.2, 0.135, 0, 0, 0]
+mustard_place_pose: [0.4, 0.29, 0.155, 0, 0, 0]
+mustard_pre_pour_pose: [0.32, 0, 0.3, 0, 0, 0]
+mustard_pour_pose: [0.32, 0, 0.3, 3.14, 0, 0]
+place_surface_offset: 0.0001 # place offset from table
+
+# Valid distance range when approaching an object for picking
+approach_min_dist: 0.03
+approach_max_dist: 0.15
+
+# Valid height range when lifting an object after pick
+lift_min_dist: 0.06
+lift_max_dist: 0.15
+

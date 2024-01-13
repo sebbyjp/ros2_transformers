@@ -1,0 +1,90 @@
+# Total planning attempts
+max_solutions: 10
+execute: true
+action_name: "sample_grasp_poses"
+# move_group:
+#   capabilities: "move_group/ExecuteTaskSolutionCapability"
+
+# Planning group and link names
+arm_group_name: "interbotix_arm"
+eef_name: "interbotix_gripper"
+hand_group_name: "interbotix_gripper"
+hand_frame: "locobot_fingers_link"
+
+# Poses
+hand_open_pose: "Released"
+hand_close_pose: "Grasping"
+arm_home_pose: "Sleep"
+deep_grasps: false
+# Scene frames
+world_frame: "world"
+table_reference_frame: "world"
+object_reference_frame: "world"
+camera_reference_frame: "world"
+bowl_reference_frame: "world"
+surface_link: "table"
+
+# spawn_objs: ["block3", "block2", "block1"]
+
+spawn_objs: ["block3", "block2", "block1"]
+
+# block1_name: "block1"
+# block1_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
+# block1_pose: [0.35, -0.2, 0, 0, 0, 0]
+# block1_place_pose: [0.35, 0.2,  0.0511, 0, 0, 0]
+
+# block2_name: "block2"
+# block2_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
+# block2_pose: [0.35, -0.2, 0.0254, 0, 0, 0]
+# block2_place_pose: [0.35, 0.2, 0.0256, 0, 0, 0]
+
+# block3_name: "block3"
+# block3_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
+# block3_pose: [0.35, -0.2, 0.0508, 0, 0, 0]
+# block3_place_pose: [0.35, 0.2,0, 0, 0, 0]
+block1_name: "block1"
+block1_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
+block1_pose: [0.4, -0.1, 0.013, 0, 0, 0]
+block1_place_pose: [0.3, 0.2,  0.063, 0, 0, 0]
+block1_start_surface: "table"
+block1_end_surface: "block2"
+
+block2_name: "block2"
+block2_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
+block2_pose: [0.4, -0.1, 0.039, 0, 0, 0]
+block2_place_pose: [0.3, 0.2, 0.039, 0, 0, 0]
+block2_start_surface: "block1"
+block2_end_surface: "block3"
+
+block3_name: "block3"
+block3_dimensions: [0.0254, 0.0254, 0.0254] # [height, radius]
+block3_pose: [0.4, -0.1, 0.063, 0, 0, 0]
+block3_place_pose: [0.3, 0.2,0.013, 0, 0, 0]
+block3_start_surface: "block2"
+block3_end_surface: "table"
+
+# Table model
+spawn_table: true
+table_name: "table"
+table_dimensions: [0.4, 0.5, 0.00002]  # [length, width, height]
+table_pose: [0.4, 0,0.00001, 0, 0, 0]
+# table_pose: [0.5, 0, 0, 0, 0, 0]
+
+# Gripper grasp frame transform [x,y,z,r,p,y]
+# grasp_frame_transform: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+grasp_frame_transform: [0.05, 0, 0, 0, -1.57, 0]
+# Place pose [x,y,z,r,p,y]
+# place_pose: [0.5, 0.3, 0, 0, 0, 0]
+
+place_surface_offset: 0.002 # place offset from table
+
+# Valid distance range when approaching an object for picking
+approach_object_min_dist: 0.05
+approach_object_max_dist: 0.1
+
+lower_object_min_dist: 0.05
+lower_object_max_dist: 0.1
+
+# Valid height range when lifting an object after pick
+lift_object_min_dist: 0.03
+lift_object_max_dist: 0.1

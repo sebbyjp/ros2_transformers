@@ -1,0 +1,38 @@
+model {
+  file: "model.sdf"
+}
+name: "Mustard Bottle"
+description: "Bradshaw International 11642 7 Qt MP Plastic Bowl\n\"Good Cook - Assorted Colors.\""
+version: 1
+authors {
+  name: "Google"
+  email: "scanned-objects@google.com"
+}
+legal {
+  copyright: "Copyright 2020 Google LLC."
+  license: "Creative Commons Attribution 4.0 International"
+}
+annotations {
+  key: "brand"
+  value: "Bradshaw International"
+}
+annotations {
+  key: "gtin"
+  value: "00076753116428"
+}
+annotations {
+  key: "mpn"
+  value: "11642"
+}
+annotations {
+  key: "sku"
+  value: "9091050_20130419_520020367"
+}
+compatibilities {
+  name: "Gazebo"
+  version {
+    major: 11
+  }
+}
+categories {
+}

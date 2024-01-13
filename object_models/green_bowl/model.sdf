@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<!--
+Copyright 2020 Google LLC.
+
+This work is licensed under the Creative Commons Attribution 4.0
+International License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/ or send a letter
+to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+-->
+<sdf version="1.6">
+  <model name="Ecoforms_Plant_Bowl_Turquoise_7">
+    <link name="link_0">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://green_bowl/meshes/model.obj</uri>
+            <scale> 0.8 0.8 0.8 </scale>
+          </mesh>
+        </geometry>
+         <material> <!-- Wheel material -->
+          <ambient>0 1 0 1</ambient>
+          <!-- <diffuse>0.1 0.1 0.2 1</diffuse>
+          <specular>0 0 0 0</specular>
+          <emissive>0 0 0 1</emissive> -->
+        </material> <!-- End wheel material -->
+      </visual>
+      <collision name="collision_0">
+        <geometry>
+          <mesh>
+            <uri>model://green_bowl/meshes/model.obj</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
