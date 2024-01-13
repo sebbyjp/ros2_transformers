@@ -32,15 +32,25 @@ ROS2 package for deploying and fine-tuning multi-modal generalist agent models. 
 
 ## Installation
 
-Clone this repo in the `src` directory of your ROS workspace: `git clone https://github.com/sebbyjp/ros2_transformers.git`
+Clone this repo in the `src` directory of your ROS workspace:
 
-Install ROS dependencies: `rosdep install --from-paths src/ros2_transformers --ignore-src --rosdistro ${ROS_DISTRO} -y`
+`git clone https://github.com/sebbyjp/ros2_transformers.git`
 
-Build: `colcon build --symlink-install --base-paths src/ros2_transformers --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo`
+Install ROS dependencies: 
 
-Source: `source install/setup.bash`
+`rosdep install --from-paths src/ros2_transformers --ignore-src --rosdistro ${ROS_DISTRO} -y`
 
-Install robo_transformers: `python3 -m pip install robo-transformers`
+Build:
+
+`colcon build --symlink-install --base-paths src/ros2_transformers --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo`
+
+Source:
+
+`source install/setup.bash`
+
+Install [robo_transformers](https://github.com/sebbyjp/robo_transformers):
+
+`python3 -m pip install robo-transformers`
 
 ## Usage
 
