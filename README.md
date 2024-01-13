@@ -9,6 +9,7 @@ ROS2 package for deploying and fine-tuning multi-modal generalist agent models. 
   - [Tested Platforms](#tested-platforms)
   - [Available Models](#available-models)
   - [Installation](#installation)
+  - [Usage](#usage)
   - [Repo Structure](#repo-structure)
   - [Software Stack](#software-stack)
     - [1. Application Layer (your code)](#1-application-layer-your-code)
@@ -31,7 +32,25 @@ ROS2 package for deploying and fine-tuning multi-modal generalist agent models. 
 
 ## Installation
 
-In a term
+Clone this repo in the `src` directory of your ROS workspace: `git clone https://github.com/sebbyjp/ros2_transformers.git`
+
+Install ROS dependencies: `rosdep install --from-paths src/ros2_transformers --ignore-src --rosdistro ${ROS_DISTRO} -y`
+
+Build: `colcon build --symlink-install --base-paths src/ros2_transformers --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo`
+
+Source: `source install/setup.bash`
+
+Install robo_transformers: `python3 -m pip install robo-transformers`
+
+## Usage
+
+In a terminal run the demo app: `ros2 launch ros2_transformers task_launch.py`. You can change the task with the `task_name` parameter in config/app_config.yaml. You can change what objects are spawned for a task with its yaml file in `tasks/`.
+
+In another terminal run one of the following:
+
+- Octo: `ros2 run ros2_transformers octo --ros-args -p use_sim_time:=true -p src_topic0:=$YOUR_MAIN_CAMERA_TOPIC -p src_topic1:=$YOUR_WRIST_CAMERA_TOPIC -p action_topic:=vla -p model_type:=octo -p weights_key:=octo-small -p default_instruction:="pick up the coke can off the table"`
+
+- RT-1/X: `ros2 run ros2_transformers rt1 --ros-args -p use_sim_time:=true -p src_topic0:=$YOUR_MAIN_CAMERA_TOPIC -p action_topic:=vla -p model_type:=rt1 -p weights_key:=rt1x -p default_instruction:="pick coke can"`
 
 ## Repo Structure
 
