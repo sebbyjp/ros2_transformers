@@ -4,7 +4,7 @@
     <link name="link">
       <inertial>
         <!-- <pose>-0.01 -0.012 0.25 0 0 0</pose> -->
-        <mass>0.390</mass>
+       <mass>0.00390</mass>
         <inertia>
           <ixx>0.00058</ixx>
           <ixy>0</ixy>
@@ -24,6 +24,7 @@
 
         </geometry>
         <surface>
+          
           <friction>
             <ode>
               <mu>1.0</mu>
@@ -31,11 +32,29 @@
             </ode>
           </friction>
           <contact>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1000000.0</kp>
+            <kd>100000.0</kd>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+            <minDepth>0.001</minDepth>
+            <maxVel>0</maxVel>
+            <torsional>
+                <ode>
+                    <coefficient>1000</coefficient>
+                    <slip>0</slip>
+                </ode>
+            </torsional>
             <ode>
-              <kp>10000000.0</kp>
-              <kd>1.0</kd>
-              <min_depth>0.001</min_depth>
-              <max_vel>0.1</max_vel>
+              <mu1>100</mu1>
+              <mu2>100</mu2>
+              <kp>1000000.0</kp>
+              <kd>100000.0</kd>
+              <slip1>0</slip1>
+              <slip2>0</slip2>
+              <minDepth>0.001</minDepth>
+              <maxVel>0</maxVel>
             </ode>
           </contact>
         </surface>

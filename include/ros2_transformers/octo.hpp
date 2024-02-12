@@ -41,6 +41,11 @@ public:
   }
 
 private:
+
+  std::string get_instruction() {
+    return this->get_parameter("instruction").as_string();
+  }
+
   rviz_visual_tools::RvizVisualToolsPtr visual_tools_;
 
   // TODO(speralta): Do not use global pybind vairables.
@@ -49,6 +54,6 @@ private:
   pybind11::scoped_interpreter py_guard_;
   std::unique_ptr<pybind11::gil_scoped_release> mp_gil_release_;
   int count_ = 0;
-  std::string instruction_;
+
 };
 }  // namespace r2t

@@ -38,16 +38,16 @@ namespace r2t
   Octo::Octo(rclcpp::NodeOptions& options) : OctoAgent(options), py_guard_()
   {
     this->declare_parameter("visualize", true);
-    this->declare_parameter("default_instruction", "pick block");
+    this->declare_parameter("instruction", "pick block");
 
     // Whether or not to load the inference server or just pass through.
     this->declare_parameter("dummy", false);
-    this->declare_parameter("weights_key", "octomultirobot");
+    this->declare_parameter("weights_key", "octo-base");
     this->declare_parameter("model_type", "octo");
+    this->declare_parameter("py_log_level", "INFO");
     // Initialize parameters
     bool dummy = this->get_parameter("dummy").as_bool();
 
-    instruction_ = this->get_parameter("default_instruction").as_string();
     auto world_frame = this->get_parameter("world_frame").as_string();
     auto weights_key = this->get_parameter("weights_key").as_string();
     auto model_type  = this->get_parameter("model_type").as_string();
@@ -63,6 +63,9 @@ namespace r2t
     inference_ = py::module::import(
       "robo_transformers.inference_server").attr(
       "InferenceServer")(py::arg("model_type") = model_type, py::arg("weights_key") = weights_key, py::arg("dummy") = dummy);
+    py::module::import("absl").attr("logging").attr("set_verbosity")(this->get_parameter("py_log_level").as_string());
+
+    // Initialize GIL)
     mp_gil_release_                              = std::make_unique<py::gil_scoped_release>();
   }
 
@@ -79,27 +82,22 @@ namespace r2t
     // TODO(speralta): Read in onnx module and run inference
     py::gil_scoped_acquire acquire;
     py::dict result = inference_(visualize,
-                                 py::arg("instruction") =instruction_,
+                                 py::arg("instruction") =get_instruction(),
                                     py::arg("image") =           py::cast(image_primary),
                                     py::arg("image_wrist") = py::cast(image_wrist));
 
-    auto world_vector =
-      result["world_vector"].attr("squeeze")().cast<Eigen::Vector3f>();
+    feedback->world_vector[0]           = result["x"].cast<float>();
+    feedback->world_vector[1]           = result["y"].cast<float>();
+    feedback->world_vector[2]           = result["z"].cast<float>();
 
-    py::print(world_vector);
-    feedback->gripper_closedness_action = result["gripper_closedness_action"].cast<float>();
-    feedback->world_vector[0]           = world_vector[0];
-    feedback->world_vector[1]           = world_vector[1];
-    feedback->world_vector[2]           = world_vector[2];
 
-    auto rotation_delta =
-      result["rotation_delta"].attr("squeeze")().cast<Eigen::Vector3f>();
+    feedback->rotation_delta[0] = result["roll"].cast<float>();
+    feedback->rotation_delta[1] = result["pitch"].cast<float>();
+    feedback->rotation_delta[2] = result["yaw"].cast<float>();
 
-    py::print(rotation_delta);
-    feedback->rotation_delta[0] = rotation_delta[0];
-    feedback->rotation_delta[1] = rotation_delta[1];
-    feedback->rotation_delta[2] = rotation_delta[2];
-    RCLCPP_ERROR(this->get_logger(), "feedback: %f, %f, %f, %f, %f, %f, %f",
+    feedback->gripper_closedness_action = result["grasp"].cast<float>();
+
+    RCLCPP_WARN(this->get_logger(), "feedback: %f, %f, %f, %f, %f, %f, %f",
                  feedback->gripper_closedness_action,
                  feedback->world_vector[0],
                  feedback->world_vector[1],
@@ -112,10 +110,6 @@ namespace r2t
 
   std::unique_ptr<std::vector<Image>> Octo::obsFromSrcs(std::shared_ptr<Image> image_primary, std::shared_ptr<Image> image_wrist)
   {
-    // auto img_primary = std::make_unique<Image>();
-    // *img_primary = *image_primary;
-    // auto img_wrist = std::make_unique<Image>();
-    // *img_wrist = *image_wrist;
     auto obs =  std::make_unique<std::vector<Image>>(); 
     obs->push_back(*image_primary);
     obs->push_back(*image_wrist);

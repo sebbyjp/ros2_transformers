@@ -1,14 +1,23 @@
 
 use_sim_time: true 
 num_iterations: 100
-sleep_ms: 1000
-action_scale: 3.0
+sleep_ms: 0
+xyz_scale: 1.0
+rpy_scale: 1.0
+action_scale: 1.0
 world_frame: "world"
-avoid_collisions: true
+cartesian_step_size: 0.0005
+avoid_collisions: false
+cartesian: true
 instruction: "pick up the top block on the stack"
-translation_bound: 10.0
-rotation_bound: 6.28
-task_name: "pick_coke_can_high_fidelity"
+xyz_bound_lo: 0.005
+xyz_bound_hi: 1.0
+rpy_bound_lo: 0.0
+rpy_bound_hi: 3.14
+
+xyz_tolerance: 0.0001
+rpy_tolerance: 0.01
+task_name: "cluttered"
 
 ## This file contains the configuration for the rt1_demo_app
 # rt1_demo_app:
