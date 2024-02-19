@@ -11,16 +11,16 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <rviz_visual_tools/rviz_visual_tools.hpp>
-#include <dgl_ros/agent.hpp>
-#include <dgl_ros/observer.hpp>
-#include <dgl_ros/actor.hpp>
+#include <ros2_agents/agent.hpp>
+#include <ros2_agents/observer.hpp>
+#include <ros2_agents/actor.hpp>
 
-#include <dgl_ros_interfaces/action/vla.hpp>
-namespace r2t
+#include <ros2_agents_interfaces/action/vla.hpp>
+namespace mbodied
 {
 
-typedef dgl::Observer<std::vector<sensor_msgs::msg::Image>, sensor_msgs::msg::Image, sensor_msgs::msg::Image> OctoObserver;
-typedef dgl::Agent<std::vector<sensor_msgs::msg::Image>, dgl_ros_interfaces::action::VLA,
+typedef mbodied::Observer<std::vector<sensor_msgs::msg::Image>, sensor_msgs::msg::Image, sensor_msgs::msg::Image> OctoObserver;
+typedef mbodied::Agent<std::vector<sensor_msgs::msg::Image>, ros2_agents_interfaces::action::VLA,
     sensor_msgs::msg::Image,  sensor_msgs::msg::Image>
   OctoAgent;
 class Octo : public OctoAgent
@@ -28,7 +28,7 @@ class Octo : public OctoAgent
 public:
   explicit Octo(rclcpp::NodeOptions & options);
 
-  dgl_ros_interfaces::action::VLA::Feedback::SharedPtr
+  ros2_agents_interfaces::action::VLA::Feedback::SharedPtr
   actionFromObs(std::shared_ptr<OctoObserver> observer) override;
 
     std::unique_ptr<std::vector<sensor_msgs::msg::Image>> 
@@ -56,4 +56,4 @@ private:
   int count_ = 0;
 
 };
-}  // namespace r2t
+}  // namespace mbodied

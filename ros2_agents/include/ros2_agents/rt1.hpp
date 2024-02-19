@@ -11,16 +11,16 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <rviz_visual_tools/rviz_visual_tools.hpp>
-#include <dgl_ros/agent.hpp>
-#include <dgl_ros/observer.hpp>
-#include <dgl_ros/actor.hpp>
+#include <ros2_agents/agent.hpp>
+#include <ros2_agents/observer.hpp>
+#include <ros2_agents/actor.hpp>
 
-#include <dgl_ros_interfaces/action/vla.hpp>
-namespace r2t
+#include <ros2_agents_interfaces/action/vla.hpp>
+namespace mbodied
 {
 
 typedef dgl::Observer<sensor_msgs::msg::Image, sensor_msgs::msg::Image> RT1Observer;
-typedef dgl::Agent<sensor_msgs::msg::Image, dgl_ros_interfaces::action::VLA,
+typedef dgl::Agent<sensor_msgs::msg::Image, ros2_agents_interfaces::action::VLA,
     sensor_msgs::msg::Image>
   RT1Agent;
 class RT1 : public RT1Agent
@@ -28,7 +28,7 @@ class RT1 : public RT1Agent
 public:
   explicit RT1(rclcpp::NodeOptions & options);
 
-  dgl_ros_interfaces::action::VLA::Feedback::SharedPtr
+  ros2_agents_interfaces::action::VLA::Feedback::SharedPtr
   actionFromObs(std::shared_ptr<RT1Observer> observer) override;
 
   sensor_msgs::msg::Image::UniquePtr
@@ -51,4 +51,4 @@ private:
   int count_ = 0;
   std::string instruction_;
 };
-}  // namespace r2t
+}  // namespace mbodied
