@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="camera" xmlns:xacro="http://ros.org/wiki/xacro">
   <link name="world"/>
-  <xacro:include filename="$(find ros2_transformers)/urdf/camera/camera_macro.urdf.xacro"/>
+  <xacro:include filename="$(find ros2_agents)/urdf/camera/camera_macro.urdf.xacro"/>
   <!-- camera side view for the cylinder -->
   <!-- <xacro:kinect_camera parent_link="world" cam_py="-0.25" cam_pz="0.04"/> -->
   <!-- overhead position -->

@@ -64,7 +64,7 @@ def launch_setup(context, *args, **kwargs):
             FindExecutable(name='xacro')
         ]),
         ' ',
-        FindPackageShare('ros2_transformers'),
+        FindPackageShare('ros2_agents'),
         '/robots/locobot_wx250s/description/urdf/locobot.urdf.xacro',
     ]), value_type=str)}
 
@@ -80,12 +80,12 @@ def launch_setup(context, *args, **kwargs):
             FindExecutable(name='xacro')
         ]),
         ' ',
-        FindPackageShare('ros2_transformers'),
+        FindPackageShare('ros2_agents'),
         '/robots/locobot_wx250s/moveit/locobot.srdf.xacro',
     ]), value_type=str)}
 
     kinematics_config = PathJoinSubstitution([
-        FindPackageShare('ros2_transformers'),
+        FindPackageShare('ros2_agents'),
         'moveit/kinematics.yaml',
     ])
 
@@ -102,22 +102,22 @@ def launch_setup(context, *args, **kwargs):
         }
     }
 
-    ompl_planning_pipeline_yaml_file = load_yaml('ros2_transformers',
+    ompl_planning_pipeline_yaml_file = load_yaml('ros2_agents',
                                                  'moveit/ompl_planning.yaml')
     ompl_planning_pipeline_config['move_group'].update(
         ompl_planning_pipeline_yaml_file)
 
     controllers_config = load_yaml(
-        'ros2_transformers',
+        'ros2_agents',
         'robots/locobot_wx250s/moveit/ros_controller_interfaces.yaml'
     )
 
     config_joint_limits = load_yaml(
-        'ros2_transformers',
+        'ros2_agents',
         'robots/locobot_wx250s/moveit/joint_limits.yaml'
     )
 
-    sensor_parameters = load_yaml('ros2_transformers',
+    sensor_parameters = load_yaml('ros2_agents',
                                   'moveit/sensors_3d.yaml')
 
     joint_limits = {
@@ -260,13 +260,13 @@ def launch_setup(context, *args, **kwargs):
     robot_description_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             PathJoinSubstitution([
-                FindPackageShare('ros2_transformers'), 'launch',
+                FindPackageShare('ros2_agents'), 'launch',
                 'robot_description_launch.py'
             ])
         ]),
         launch_arguments={
             'urdf_path':  PathJoinSubstitution([
-                FindPackageShare('ros2_transformers'), 'robots/locobot_wx250s/description/urdf/locobot.urdf.xacro'
+                FindPackageShare('ros2_agents'), 'robots/locobot_wx250s/description/urdf/locobot.urdf.xacro'
             ])
         }.items()
     )
@@ -305,7 +305,7 @@ def generate_launch_description():
             FindExecutable(name='xacro')
         ]),
         ' ',
-        FindPackageShare('ros2_transformers'),
+        FindPackageShare('ros2_agents'),
         '/robots/locobot_wx250s/moveit/locobot.srdf.xacro',
     ]), value_type=str)},]
     )
@@ -328,7 +328,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             'rviz_config_file',
             default_value=PathJoinSubstitution([
-                FindPackageShare('ros2_transformers'), 'config',
+                FindPackageShare('ros2_agents'), 'config',
                 'rviz_gui.rviz'
             ]),
             description='file path to the config file RViz should load.',

@@ -3,12 +3,12 @@
   <link name="bowl_link">
   <visual>
     <geometry>
-	    <mesh filename="package://ros2_transformers/meshes/objects/bowl.dae"/>
+	    <mesh filename="package://ros2_agents/meshes/objects/bowl.dae"/>
 	</geometry>
   </visual>
   <collision>
     <geometry>
-       <mesh filename="package://ros2_transformers/meshes/objects/bowl.dae"/>
+       <mesh filename="package://ros2_agents/meshes/objects/bowl.dae"/>
 	</geometry>
   </collision>
     <inertial>

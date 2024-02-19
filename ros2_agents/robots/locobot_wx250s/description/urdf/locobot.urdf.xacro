@@ -44,24 +44,24 @@
   <xacro:property name="finger_limit_vel" value="1.0" />
 
   <xacro:arg name="initial_positions_file"
-    default="$(find ros2_transformers)/robots/locobot_wx250s/control/sim/initial_positions.yaml" />
+    default="$(find ros2_agents)/robots/locobot_wx250s/control/sim/initial_positions.yaml" />
   <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)" />
   <xacro:property name="initial_positions" default="${xacro.load_yaml(initial_positions_file)}" />
 
 
   <material name="interbotix_black">
     <texture
-      filename="package://ros2_transformers/robots/locobot_wx250s/description/images/interbotix_black.png" />
+      filename="package://ros2_agents/robots/locobot_wx250s/description/images/interbotix_black.png" />
   </material>
 
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/body/plate.urdf.xacro" />
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/body/battery.urdf.xacro" />
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/body/camera_tower.urdf.xacro" />
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/body/pan_and_tilt.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/body/plate.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/body/battery.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/body/camera_tower.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/body/pan_and_tilt.urdf.xacro" />
 
 
     <xacro:include
-      filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/base/kobuki.urdf.xacro" />
+      filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/base/kobuki.urdf.xacro" />
     <xacro:property name="mesh_scale" value="0.001 0.001 0.001" />
 
 
@@ -69,7 +69,7 @@
 
 
   <xacro:include
-  filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/arms/mobile_arm.urdf.xacro" />
+  filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/arms/mobile_arm.urdf.xacro" />
 <xacro:mobile_arm />
 
 
@@ -134,8 +134,8 @@
       </xacro:pan_and_tilt>
 
 
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/control/sim/gz_control.urdf.xacro" />
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/control/sim/gz_sense.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/control/sim/gz_control.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/control/sim/gz_sense.urdf.xacro" />
   <gazebo>
     <xacro:fake_actuators />
     <xacro:fake_sensors />

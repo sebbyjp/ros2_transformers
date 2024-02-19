@@ -15,12 +15,12 @@
 #include <ros2_agents/observer.hpp>
 #include <ros2_agents/actor.hpp>
 
-#include <ros2_agents_interfaces/action/vla.hpp>
+#include <ros2_agents_interfaces/action/mbodied.hpp>
 namespace mbodied
 {
 
-typedef dgl::Observer<sensor_msgs::msg::Image, sensor_msgs::msg::Image> RT1Observer;
-typedef dgl::Agent<sensor_msgs::msg::Image, ros2_agents_interfaces::action::VLA,
+typedef Observer<sensor_msgs::msg::Image, sensor_msgs::msg::Image> RT1Observer;
+typedef Agent<sensor_msgs::msg::Image, ros2_agents_interfaces::action::Mbodied,
     sensor_msgs::msg::Image>
   RT1Agent;
 class RT1 : public RT1Agent
@@ -28,7 +28,7 @@ class RT1 : public RT1Agent
 public:
   explicit RT1(rclcpp::NodeOptions & options);
 
-  ros2_agents_interfaces::action::VLA::Feedback::SharedPtr
+  ros2_agents_interfaces::action::Mbodied::Feedback::SharedPtr
   actionFromObs(std::shared_ptr<RT1Observer> observer) override;
 
   sensor_msgs::msg::Image::UniquePtr

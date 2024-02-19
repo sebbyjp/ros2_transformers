@@ -25,7 +25,7 @@ from os import path
 # Launch robot description, start controllers, start moveit, start sim
 def generate_launch_description():
     # Get the launch directory
-    ros2_transformers_dir = get_package_share_directory('ros2_transformers')
+    ros2_agents_dir = get_package_share_directory('ros2_agents')
 
     # Create the launch configuration variables
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
@@ -38,7 +38,7 @@ def generate_launch_description():
     )
     declare_urdf_path_argument = DeclareLaunchArgument(
         'urdf',
-        default_value=path.join(ros2_transformers_dir, 'urdf', '/robots/locobot_wx250s/description/urdf/locobot.urdf.xacro'),
+        default_value=path.join(ros2_agents_dir, 'urdf', '/robots/locobot_wx250s/description/urdf/locobot.urdf.xacro'),
         description='Absolute path to robot urdf file'
     )
     
@@ -54,7 +54,7 @@ def generate_launch_description():
 
     # Include launch sim
     gz_launch_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([ros2_transformers_dir, '/launch/gz_launch.py'])
+        PythonLaunchDescriptionSource([ros2_agents_dir, '/launch/gz_launch.py'])
     )
 
     # Spawn controllers

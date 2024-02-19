@@ -96,14 +96,14 @@ def resolve_model_description(model_path,pkg_dir, name,color,lwh):
 
 
 def generate_launch_description() -> LaunchDescription:
-    ros2_transformers_dir = get_package_share_directory("ros2_transformers")
-    with open(path.join(ros2_transformers_dir, "config/app_config.yaml")) as f:
+    ros2_agents_dir = get_package_share_directory("ros2_agents")
+    with open(path.join(ros2_agents_dir, "config/app_config.yaml")) as f:
         app_config = yaml.load(f, Loader=yaml.FullLoader)
-    with open(path.join(ros2_transformers_dir, "tasks/" + app_config['task_name'] + ".yaml")) as f:
+    with open(path.join(ros2_agents_dir, "tasks/" + app_config['task_name'] + ".yaml")) as f:
         task_config = yaml.load(f, Loader=yaml.FullLoader)
 
     kinematics_config = PathJoinSubstitution([
-        FindPackageShare("ros2_transformers"),
+        FindPackageShare("ros2_agents"),
         "config",
         "kinematics.yaml",
     ])
@@ -112,12 +112,12 @@ def generate_launch_description() -> LaunchDescription:
         name='IGN_FILE_PATH',
         value=[
             EnvironmentVariable('IGN_FILE_PATH', default_value=''),
-            ':', path.join(ros2_transformers_dir, 'sim/third_party')])
+            ':', path.join(ros2_agents_dir, 'sim/third_party')])
     set_gz_sdf_path = SetEnvironmentVariable(
         name='SDF_PATH',
         value=[
             EnvironmentVariable('SDF_PATH', default_value=''),
-            ':', path.join(ros2_transformers_dir, 'sim/third_party')])
+            ':', path.join(ros2_agents_dir, 'sim/third_party')])
 
     start_gz_world = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -142,7 +142,7 @@ def generate_launch_description() -> LaunchDescription:
             color = item["colors"][i]
             spawn_node = spawn_create_item_node(
                 name,
-                resolve_model_description(item['path'], ros2_transformers_dir, name, color, lwh),
+                resolve_model_description(item['path'], ros2_agents_dir, name, color, lwh),
                 x,
                 y,
                 z,
@@ -157,7 +157,7 @@ def generate_launch_description() -> LaunchDescription:
         parameters=[
             {
                 "config_file":
-                    path.join(ros2_transformers_dir,
+                    path.join(ros2_agents_dir,
                               "config/ros_gz_bridge.yaml")
             },
             # {
@@ -197,9 +197,9 @@ def generate_launch_description() -> LaunchDescription:
     #     output={'both': 'screen'},
     # )
 
-    rt1_demo_app_node = Node(
-        package="ros2_transformers",
-        executable="rt1_demo_app",
+    demo_app_node = Node(
+        package="ros2_agents",
+        executable="demo_app",
         output="screen",
         parameters=[
             get_launch_arg_overrides(app_config),
@@ -214,7 +214,7 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument(
             "world_filepath",
             default_value=PathJoinSubstitution([
-                FindPackageShare("ros2_transformers"),
+                FindPackageShare("ros2_agents"),
                 "sim/worlds/empty.sdf",
             ]),
             description="the file path to the Gazebo world file to load.",
@@ -238,7 +238,7 @@ def generate_launch_description() -> LaunchDescription:
         *spawn_item_nodes,
         # spawn_block2,
         # spawn_block3,
-        rt1_demo_app_node,
+        demo_app_node,
         # RegisterEventHandler(
         # OnProcessStart(
         #     target_action=rt1_demo_app,

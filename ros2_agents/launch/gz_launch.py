@@ -65,7 +65,7 @@ def launch_setup(context, *args, **kwargs):
             'ignition.msgs.StringMsg_V', '--reptype', 'ignition.msgs.Empty',
             '--timeout', '1000', '-rdata:"' + str(
                 Path(
-                    FindPackageShare('ros2_transformers').
+                    FindPackageShare('ros2_agents').
                     perform(context)).parent.resolve()) + '"'
         ],
         output='screen',

@@ -6,13 +6,13 @@
     scope="global" />
 
   <xacro:property name="mesh_directory"
-    value="package://ros2_transformers/robots/locobot_wx250s/description/meshes/arms" />
+    value="package://ros2_agents/robots/locobot_wx250s/description/meshes/arms" />
 
   <xacro:property name="pi_offset" value="0.00001" />
 
   <xacro:property name="initial_positions_file" default="$(find interbotix_xslocobot_sim)/config/initial_positions.yaml" />
   <xacro:property name="initial_positions" default="${xacro.load_yaml(initial_positions_file)}" />
-  <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/arms/ar_tag.urdf.xacro" />
+  <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/arms/ar_tag.urdf.xacro" />
   <link name="${robot_name}_arm_base_link">
     <visual>
       <origin
@@ -733,7 +733,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
           </visual>
@@ -742,7 +742,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
           </visual>
@@ -751,7 +751,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -761,7 +761,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -771,7 +771,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -781,7 +781,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -791,7 +791,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -801,7 +801,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -811,7 +811,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -821,7 +821,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -831,7 +831,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -841,7 +841,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -853,7 +853,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -863,7 +863,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -873,7 +873,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 
@@ -883,7 +883,7 @@
           <visual>
             <material>
               <xacro:include
-                filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
+                filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/colors.urdf.xacro" />
               <xacro:color color="black" />
             </material>
 

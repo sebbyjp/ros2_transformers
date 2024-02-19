@@ -26,7 +26,7 @@
       <visual name="visual">
         <geometry>
           <mesh>
-            <uri>package://ros2_transformers/meshes/objects/bowl.dae</uri>
+            <uri>package://ros2_agents/meshes/objects/bowl.dae</uri>
           </mesh>
         </geometry>
       </visual>

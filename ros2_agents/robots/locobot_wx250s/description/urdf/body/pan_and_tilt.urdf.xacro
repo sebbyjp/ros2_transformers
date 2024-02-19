@@ -29,7 +29,7 @@
           xyz="0 0 0" />
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/body/locobot_pan.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/body/locobot_pan.stl"
             scale="0.001 0.001 0.001" />
         </geometry>
         <material name="interbotix_black" />
@@ -40,7 +40,7 @@
           xyz="0 0 0" />
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/body/locobot_pan.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/body/locobot_pan.stl"
             scale="0.001 0.001 0.001" />
         </geometry>
       </collision>
@@ -90,7 +90,7 @@
           xyz="0 0 0" />
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/body/locobot_tilt.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/body/locobot_tilt.stl"
             scale="0.001 0.001 0.001" />
         </geometry>
         <material name="interbotix_black" />
@@ -101,7 +101,7 @@
           xyz="0 0 0" />
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/body/locobot_tilt.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/body/locobot_tilt.stl"
             scale="0.001 0.001 0.001" />
         </geometry>
       </collision>
@@ -146,7 +146,7 @@
           xyz="0 0 0" />
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/locobot_camera.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/locobot_camera.stl"
             scale="0.001 0.001 0.001" />
         </geometry>
         <material name="">
@@ -160,7 +160,7 @@
           xyz="0 0 0" />
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/locobot_camera.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/locobot_camera.stl"
             scale="0.001 0.001 0.001" />
         </geometry>
       </collision>

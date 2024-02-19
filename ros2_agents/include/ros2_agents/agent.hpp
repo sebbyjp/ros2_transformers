@@ -34,7 +34,7 @@ public:
 
   {
     this->declare_parameter("world_frame", "world");
-    for (int i = 0; i < sizeof...(SrcTs); i++)
+    for (int i = 0; i < static_cast<int>(sizeof...(SrcTs)); i++)
     {
       this->declare_parameter("src_frame" + std::to_string(i), "camera_locobot_link");
     }
@@ -69,6 +69,12 @@ public:
   virtual std::unique_ptr<ObsT> obsFromSrcs(std::shared_ptr<SrcTs>... srcs) = 0;
 
 protected:
+
+
+  std::string get_instruction() {
+    return this->get_parameter("instruction").as_string();
+  }
+  
   std::shared_ptr<Observer<ObsT, SrcTs...>> observer_;
   std::shared_ptr<Actor<ActionT>> actor_;
 };

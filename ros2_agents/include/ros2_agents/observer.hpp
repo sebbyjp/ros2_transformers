@@ -40,7 +40,7 @@ public:
     , last_src_msgs_recieved_(std::make_tuple(std::make_shared<SrcTs>()...))
   {
     const std::array<std::string, sizeof...(SrcTs)> src_topics = declare_params();
-    for (int i = 0; i < sizeof...(SrcTs); i++)
+    for (int i = 0; i < static_cast<int>(sizeof...(SrcTs)); i++)
     {
       recieved_first_src_msgs_[i] = false;
     }
@@ -50,25 +50,25 @@ public:
                                             recieved_first_src_msgs_, std::index_sequence_for<SrcTs...>{});
 
     // For debugging.
-    auto pub_group = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
-    rclcpp::PublisherOptions pub_options;
-    pub_options.callback_group = pub_group;
-    obs_pub_ = this->create_publisher<ObsT>("observation", 10, pub_options);
-    pub_timer_ = this->create_wall_timer(std::chrono::milliseconds(100), [this]() -> void {
-      if (observation_cache_.size() > 0 && this->get_parameter("publish_observation").as_bool())
-      {
-        ObsT obs = *observation_cache_.back();
-        try
-        {
-          obs.header.stamp = this->now();
-        }
-        catch (std::exception& e)
-        {
-          RCLCPP_WARN(this->get_logger(), "Tried to update observation timestamp. Exception caught: %s", e.what());
-        }
-        obs_pub_->publish(obs);
-      }
-    });
+    // auto pub_group = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
+    // rclcpp::PublisherOptions pub_options;
+    // pub_options.callback_group = pub_group;
+    // obs_pub_ = this->create_publisher<ObsT>("observation", 10, pub_options);
+    // pub_timer_ = this->create_wall_timer(std::chrono::milliseconds(100), [this]() -> void {
+    //   if (observation_cache_.size() > 0 && this->get_parameter("publish_observation").as_bool())
+    //   {
+    //     ObsT obs = *observation_cache_.back();
+    //     try
+    //     {
+    //       obs.header.stamp = this->now();
+    //     }
+    //     catch (std::exception& e)
+    //     {
+    //       RCLCPP_WARN(this->get_logger(), "Tried to update observation timestamp. Exception caught: %s", e.what());
+    //     }
+    //     obs_pub_->publish(obs);
+    //   }
+    // });
   }
 
   // TODO(speralta): Return copy instead of pointer since may be deleted by pops.
@@ -118,7 +118,7 @@ private:
   {
     // Initialize and seet parameters, allowing for overrides.
     std::array<std::string, sizeof...(SrcTs)> src_topics;
-    for (int i = 0; i < sizeof...(SrcTs); i++)
+    for (int i = 0; i < static_cast<int>(sizeof...(SrcTs)); i++)
     {
       this->declare_parameter("src_topic" + std::to_string(i), "rgbd_camera/points");
       src_topics[i] = this->get_parameter("src_topic" + std::to_string(i)).as_string();
@@ -145,12 +145,13 @@ private:
 
   std::function<std::unique_ptr<ObsT>(std::shared_ptr<SrcTs>...)> obs_from_srcs_function_;
   mutable std::shared_mutex obs_mutex_;
+  
   // List of last `cache_size` observations made in reverse chronological order.
   std::deque<std::unique_ptr<ObsT>> observation_cache_ RCPPUTILS_TSA_GUARDED_BY(obs_mutex_);
   int num_pops_ = 0;
 
-  typename rclcpp::Publisher<ObsT>::SharedPtr obs_pub_;
-  rclcpp::TimerBase::SharedPtr pub_timer_;
+  // typename rclcpp::Publisher<ObsT>::SharedPtr obs_pub_;
+  // rclcpp::TimerBase::SharedPtr pub_timer_;
 };
 
 }  // namespace mbodied

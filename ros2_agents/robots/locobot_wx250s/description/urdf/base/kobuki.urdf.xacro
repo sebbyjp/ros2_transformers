@@ -62,7 +62,7 @@
         xyz="0.001 0 0.05199"/>
       <geometry>
         <mesh
-          filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/base/kobuki.dae"/>
+          filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/base/kobuki.dae"/>
       </geometry>
     </visual>
     <collision>
@@ -134,7 +134,7 @@
         xyz="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/base/kobuki_wheel.dae"/>
+          filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/base/kobuki_wheel.dae"/>
       </geometry>
     </visual>
     <collision>
@@ -201,7 +201,7 @@
         xyz="0 0 0"/>
       <geometry>
         <mesh
-          filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/base/kobuki_wheel.dae"/>
+          filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/base/kobuki_wheel.dae"/>
       </geometry>
     </visual>
     <collision>

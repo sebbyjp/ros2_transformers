@@ -10,7 +10,7 @@
       </joint>
 
 
-    <xacro:include filename="$(find ros2_transformers)/robots/locobot_wx250s/description/urdf/arms/mobile_wx250s.urdf.xacro"/>
+    <xacro:include filename="$(find ros2_agents)/robots/locobot_wx250s/description/urdf/arms/mobile_wx250s.urdf.xacro"/>
 
     <gazebo reference="${robot_name}_arm_base_link">
       <material>Gazebo/DarkGrey</material>

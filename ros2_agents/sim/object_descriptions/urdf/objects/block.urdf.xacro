@@ -32,7 +32,7 @@
     <gazebo reference="$(arg name)">
         <visual>
             <material>
-                <xacro:include filename="$(find ros2_transformers)/sim/object_descriptions/urdf/colors.urdf.xacro" />
+                <xacro:include filename="$(find ros2_agents)/sim/object_descriptions/urdf/colors.urdf.xacro" />
                 <xacro:color color="$(arg color)" />
             </material>
 

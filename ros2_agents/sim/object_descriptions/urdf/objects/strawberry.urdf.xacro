@@ -3,12 +3,12 @@
   <link name="strawberry">
   <visual>
      <geometry>
-	       <mesh filename="package://ros2_transformers/meshes/objects/strawberry.dae"/>
+	       <mesh filename="package://ros2_agents/meshes/objects/strawberry.dae"/>
 	     </geometry>
   </visual>
   <collision>
     <geometry>
-       <mesh filename="package://ros2_transformers/meshes/objects/strawberry.dae"/>
+       <mesh filename="package://ros2_agents/meshes/objects/strawberry.dae"/>
 	   </geometry>
   </collision>
 	<inertial>

@@ -2,21 +2,16 @@
 #include <chrono>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
-#include <moveit/planning_scene/planning_scene.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-#include <moveit/task_constructor/task.h>
-#include <moveit/task_constructor/solvers.h>
-#include <moveit/task_constructor/stages.h>
 #include <geometry_msgs/msg/twist_stamped.hpp>
-#include <dgl_ros_interfaces/action/vla.hpp>
+#include <ros2_agents_interfaces/action/mbodied.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
-#include <moveit/planning_scene_monitor/planning_scene_monitor.h>
 #include <moveit_visual_tools/moveit_visual_tools.h>
+
 namespace chrono = std::chrono;
 namespace rvt    = rviz_visual_tools;
-using dgl_ros_interfaces::action::VLA;
-using VLAGoalHandleSharedPtr = std::shared_ptr<rclcpp_action::ClientGoalHandle<VLA> >;
+
+using ros2_agents_interfaces::action::Mbodied;
+using GoalHandleSharedPtr = std::shared_ptr<rclcpp_action::ClientGoalHandle<Mbodied> >;
 
 // C++ 20 convenience for legacy CXX compilers.
 #define TIME_DIFF(tic,                                                                    \
@@ -25,7 +20,7 @@ using VLAGoalHandleSharedPtr = std::shared_ptr<rclcpp_action::ClientGoalHandle<V
 #define CLAMP(x, xmin, xmax) std::max(xmin, std::min(xmax, x))
 
 
-namespace r2t
+namespace mbodied
 {
   geometry_msgs::msg::Pose poseFromXYZRPY(std::vector<double>pose)
   {
@@ -92,13 +87,13 @@ namespace r2t
   }
 
   template<typename ActionT>
-  class RTXAgentClient : public rclcpp::Node {
+  class AgentClient : public rclcpp::Node {
 public:
 
-    RTXAgentClient(rclcpp::NodeOptions& options)
-      : rclcpp::Node("RTXAgentClientNode", options)
+    AgentClient(rclcpp::NodeOptions& options)
+      : rclcpp::Node("AgentClientNode", options)
     {
-      action_client_ = rclcpp_action::create_client<ActionT>(this, "vla");
+      action_client_ = rclcpp_action::create_client<ActionT>(this, "mbodied");
       this->declare_parameter("world_frame", "world");
       this->declare_parameter("hand_frame", "locobot_fingers_link");
       this->declare_parameter("num_iterations", 100);
@@ -141,7 +136,6 @@ public:
       this->declare_parameter("rpy_tolerance", 0.1);
       this->declare_parameter("xyz_scale", 35.0);
       this->declare_parameter("rpy_scale", 6.0);
-
     }
 
     void init()
@@ -150,7 +144,7 @@ public:
         std::shared_ptr<rclcpp::Node>(this),
         arm_group_);
       move_arm_group_->setEndEffectorLink(hand_frame_);
-        
+
       visual_tools_ =  std::make_unique<
         moveit_visual_tools::MoveItVisualTools>(
         std::shared_ptr<rclcpp::Node>(this),
@@ -160,6 +154,7 @@ public:
       visual_tools_->deleteAllMarkers();
 
       move_arm_group_->startStateMonitor();
+
       // move_arm_group_->setMaxAccelerationScalingFactor(0.05);
       // move_arm_group_->setMaxVelocityScalingFactor(0.05);
       move_arm_group_->setPoseReferenceFrame(world_frame_);
@@ -208,12 +203,12 @@ public:
     {
       if (result.code == rclcpp_action::ResultCode::SUCCEEDED)
       {
-        RCLCPP_INFO(logger(), "VLA SUCCEEDED (result): %s",
+        RCLCPP_INFO(logger(), "Action SUCCEEDED (result): %s",
                     result.result->grasp_state.c_str());
       }
       else
       {
-        RCLCPP_ERROR(logger(), "VLA error %s",
+        RCLCPP_ERROR(logger(), "Action error %s",
                      result.result->grasp_state.c_str());
       }
     }
@@ -245,17 +240,17 @@ private:
   };
 
   template<>
-  void RTXAgentClient<VLA>::feedback_callback(
-    rclcpp_action::ClientGoalHandle<VLA>::SharedPtr gh,
-    const std::shared_ptr<const VLA::Feedback>      fb)
+  void AgentClient<Mbodied>::feedback_callback(
+    rclcpp_action::ClientGoalHandle<Mbodied>::SharedPtr gh,
+    const std::shared_ptr<const Mbodied::Feedback>      fb)
   {
     (void)gh;
     RCLCPP_INFO(
       logger(),
       "Feedback WORLD VECTOR: %f %f %f",
-      fb->world_vector[0],
-      fb->world_vector[1],
-      fb->world_vector[2]);
+      fb->actions[0].left_hand.x,
+     fb->actions[0].left_hand.y,
+     fb->actions[0].left_hand.z);
 
 
     last_action_ = *fb;
@@ -265,11 +260,10 @@ private:
   // TODO(speralta): Make more general by passing in current openness ->
   // joint_names + values function
   template<>
-  bool RTXAgentClient<VLA>::move_hand(const VLA::Feedback& action)
+  bool AgentClient<Mbodied>::move_hand(const Mbodied::Feedback& action)
   {
     const auto tic = chrono::steady_clock::now();
 
-    // move_hand_group_->setStartStateToCurrentState();
     const double current_finger_joint_value =
       move_hand_group_->getCurrentState()->getVariablePosition(
         left_finger_joint_);
@@ -285,9 +279,9 @@ private:
     // const double target_openness = 0.5 * (action.gripper_closedness_action +
     // 1);
     const double target_openness =
-      current_openness + action.gripper_closedness_action;
+      current_openness + action.actions[0].left_hand.grasp;
 
-    RCLCPP_WARN(
+    RCLCPP_INFO(
       logger(), "HAND OPENNESS -- Current: %f, Target: %f", current_openness,
       target_openness);
 
@@ -295,46 +289,15 @@ private:
       target_openness, finger_joint_min_,
       finger_joint_max_);
 
-    // TODO(speralta): Fix unscale for right finger joint it should be
-    // -current_finger_joint_value
 
 
-    RCLCPP_WARN(
+    RCLCPP_INFO(
       logger(),
       "FINGER JOINT -- Current: %f, %f, Target: %f, %f",
       current_finger_joint_value,
       current_right_finger_joint_value,
       target_finger_joint_value,
       -target_finger_joint_value);
-
-
-    // moveit_msgs::msg::RobotTrajectory trajectory;
-
-    // trajectory.joint_trajectory.joint_names.push_back(left_finger_joint_);
-    // trajectory.joint_trajectory.joint_names.push_back(right_finger_joint_);
-
-    // trajectory_msgs::msg::JointTrajectoryPoint current;
-
-    // current.positions.push_back(current_finger_joint_value);
-    // current.positions.push_back(-current_right_finger_joint_value);
-
-    // trajectory.joint_trajectory.points.push_back(current);
-
-    // trajectory_msgs::msg::JointTrajectoryPoint target;
-
-    // target.time_from_start = rclcpp::Duration::from_seconds(0.01);
-    // target.positions.push_back(target_finger_joint_value);
-    // target.positions.push_back(-target_finger_joint_value);
-    // trajectory.joint_trajectory.points.push_back(target);
-    // moveit::core::MoveItErrorCode result_status =
-    // move_hand_group_->execute(trajectory);
-
-    //  for (const auto& j: move_hand_group_->getActiveJoints()) {
-    //   RCLCPP_WARN(logger(), "active joint: %s", j.c_str());
-    //  }
-    //  for (const auto& j: move_hand_group_->getCurrentJointValues()) {
-    //   RCLCPP_WARN(logger(), "active joint: %f", j);
-    //  }
 
     move_hand_group_->setJointValueTarget(left_finger_joint_,  target_finger_joint_value);
     move_hand_group_->setJointValueTarget(right_finger_joint_, -target_finger_joint_value);
@@ -349,7 +312,7 @@ private:
   }
 
   template<>
-  bool RTXAgentClient<VLA>::move_arm(const VLA::Feedback& action)
+  bool AgentClient<Mbodied>::move_arm(const Mbodied::Feedback& action)
   {
     move_arm_group_->setGoalOrientationTolerance(get_param<double>("rpy_tolerance"));
     move_arm_group_->setGoalPositionTolerance(get_param<double>("xyz_tolerance"));
@@ -358,8 +321,8 @@ private:
     const auto tic = chrono::steady_clock::now();
 
     RCLCPP_INFO(
-      logger(), "VLA WORLD VECTOR in move_arm: %f %f %f", action.world_vector[0],
-      action.world_vector[1], action.world_vector[2]);
+      logger(), "Mbodied xyz in move_arm: %f %f %f", action.actions[0].left_hand.x,
+       action.actions[0].left_hand.y,  action.actions[0].left_hand.z);
 
     const auto current_pose = move_arm_group_->getCurrentPose(hand_frame_).pose;
     const auto current_rpy  = move_arm_group_->getCurrentRPY(hand_frame_);
@@ -397,29 +360,29 @@ private:
                                &xyz_bound_lo, &xyz_bound_hi, &rpy_bound_lo, &rpy_bound_hi, this] {
                                 const std::vector<double> target_xyz = {
                                   current_pose.position.x + clip(xyz_scale *
-                                                                 action.world_vector[0],
+                                                                  action.actions[0].left_hand.x,
                                                                  xyz_bound_lo,
                                                                  xyz_bound_hi),
                                   current_pose.position.y + clip(xyz_scale *
-                                                                 action.world_vector[1],
+                                                                action.actions[0].left_hand.y,
                                                                  xyz_bound_lo,
                                                                  xyz_bound_hi),
                                   current_pose.position.z + clip(xyz_scale *
-                                                                 action.world_vector[2],
+                                                                action.actions[0].right_hand.z,
                                                                  xyz_bound_lo,
                                                                  xyz_bound_hi) };
 
                                 const std::vector<double> target_rpy = {
                                   current_rpy[0] + clip(rpy_scale *
-                                                        action.rotation_delta[0],
+                                                 action.actions[0].left_hand.roll,
                                                         rpy_bound_lo,
                                                         rpy_bound_hi),
                                   current_rpy[1] + clip(rpy_scale *
-                                                        action.rotation_delta[1],
+                                                    action.actions[0].left_hand.pitch,
                                                         rpy_bound_lo,
                                                         rpy_bound_hi),
                                   current_rpy[2] + clip(rpy_scale *
-                                                        action.rotation_delta[2],
+                                                      action.actions[0].left_hand.yaw,
                                                         rpy_bound_lo,
                                                         rpy_bound_hi) };
 
@@ -477,13 +440,13 @@ private:
                                                        const float distance =
                                                          move_arm_group_->computeCartesianPath(
                                                            waypoints,
-                                                        get_param<double>(
+                                                           get_param<double>(
                                                              "cartesian_step_size"),
                                                            5.0,
                                                            trajectory,
                                                            get_param<bool>(
                                                              "avoid_collisions"));
-                                                       RCLCPP_WARN(
+                                                       RCLCPP_INFO(
                                                          logger(),
                                                          "move_arm planned distance reached %f ",
                                                          distance);
@@ -496,7 +459,7 @@ private:
                                                          trajectory,
                                                          joint_model_group);
                                                        visual_tools_->trigger();
-                                                          visual_tools_->publishTrajectoryPath(
+                                                       visual_tools_->publishTrajectoryPath(
                                                          trajectory,
                                                          move_arm_group_->getCurrentState());
 
@@ -507,7 +470,7 @@ private:
 
                                                      const auto toc = chrono::steady_clock::now();
 
-                                                     RCLCPP_WARN(logger(),
+                                                     RCLCPP_INFO(logger(),
                                                                  "move_arm planned in %i ms",
                                                                  TIME_DIFF(tic, toc));
                                                      return result;
@@ -527,7 +490,7 @@ private:
 
     if (result == moveit::core::MoveItErrorCode::SUCCESS)
     {
-      RCLCPP_WARN(logger(),
+      RCLCPP_INFO(logger(),
                   "move_arm status: %s in %i ms ",
                   moveit::core::error_code_to_string(result).c_str(),
                   TIME_DIFF(tic, toc));
@@ -544,26 +507,26 @@ private:
   }
 
   template<>
-  bool RTXAgentClient<VLA>::act()
+  bool AgentClient<Mbodied>::act()
   {
     const auto tic = chrono::steady_clock::now();
 
     // psm.updateFrameTransforms();
     // psm.clearOctomap(); // Don't worry about colliding with octomap.
 
-    auto goal = VLA::Goal();
+    auto goal = Mbodied::Goal();
 
-    goal.instructions = get_param<std::string>("instruction");
-    auto options = rclcpp_action::Client<VLA>::SendGoalOptions();
+    goal.instruction = get_param<std::string>("instruction");
+    auto options = rclcpp_action::Client<Mbodied>::SendGoalOptions();
 
-    options.goal_response_callback = std::bind(&RTXAgentClient<VLA>::goal_response_callback,
+    options.goal_response_callback = std::bind(&AgentClient<Mbodied>::goal_response_callback,
                                                this,
                                                std::placeholders::_1);
-    options.feedback_callback = std::bind(&RTXAgentClient<VLA>::feedback_callback,
+    options.feedback_callback = std::bind(&AgentClient<Mbodied>::feedback_callback,
                                           this,
                                           std::placeholders::_1,
                                           std::placeholders::_2);
-    options.result_callback = std::bind(&RTXAgentClient<VLA>::result_callback,
+    options.result_callback = std::bind(&AgentClient<Mbodied>::result_callback,
                                         this,
                                         std::placeholders::_1);
     action_client_->async_send_goal(goal, options);
@@ -580,36 +543,4 @@ private:
 
     return move_hand(last_action_) && move_arm(last_action_);
   }
-} // namespace r2t
-
-int main(int argc, char **argv)
-{
-  rclcpp::init(argc, argv);
-  rclcpp::NodeOptions options;
-  auto rtx_client_node = std::make_shared<r2t::RTXAgentClient<VLA> >(options);
-
-  // Spin in the background for planning scene to work.
-  rclcpp::executors::MultiThreadedExecutor executor;
-
-  /* *INDENT-OFF* */
-  executor.add_node(rtx_client_node);
-  std::thread([&executor]() {executor.spin();}).detach();
- /* *INDENT-ON* */
-  rtx_client_node->init();
-
-  for (int i = 0; i < rtx_client_node->get_param<int>("num_iterations"); ++i)
-  {
-    if (!rclcpp::ok())
-    {
-      break;
-    }
-    RCLCPP_INFO(rtx_client_node->get_logger(), "*** Iteration %i", i);
-    const auto tic = chrono::steady_clock::now();
-    rtx_client_node->act();
-    const auto toc = chrono::steady_clock::now();
-    RCLCPP_INFO(rtx_client_node->get_logger(), "Action took %i ms", TIME_DIFF(tic, toc));
-    std::this_thread::sleep_for(chrono::milliseconds(rtx_client_node->get_param<int>("sleep_ms")));
-  }
-  rclcpp::shutdown();
-  return 0;
-}
+} // namespace mbodied

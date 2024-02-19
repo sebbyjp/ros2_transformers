@@ -8,13 +8,13 @@
     <visual>
       <origin xyz="$(arg x) $(arg y) $(arg z)" />
       <geometry>
-        <mesh filename="$(find ros2_transformers)/meshes/objects/bar_clamp.dae" />
+        <mesh filename="$(find ros2_agents)/meshes/objects/bar_clamp.dae" />
 	    </geometry>
     </visual>
     <collision>
       <origin xyz="$(arg x) $(arg y) $(arg z)" />
       <geometry>
-        <mesh filename="$(find ros2_transformers)/meshes/objects/bar_clamp.dae" />
+        <mesh filename="$(find ros2_agents)/meshes/objects/bar_clamp.dae" />
 	    </geometry>
     </collision>
 	<inertial>
@@ -26,7 +26,7 @@
   <gazebo reference="barclamp">
     <visual>
       <material>
-        <xacro:include filename="$(find ros2_transformers)/tasks/sim/object_descriptions/urdf/colors.urdf.xacro" />
+        <xacro:include filename="$(find ros2_agents)/tasks/sim/object_descriptions/urdf/colors.urdf.xacro" />
         <xacro:color color="$(arg color)" />
       </material>
 

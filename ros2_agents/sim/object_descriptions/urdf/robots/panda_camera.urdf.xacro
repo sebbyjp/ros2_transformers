@@ -3,7 +3,7 @@
   <!-- Panda Arm + Hand -->
   <!-- <xacro:include filename="$(find franka_description)/robots/panda_arm_hand.urdf.xacro"/> -->
 
-  <xacro:include filename="$(find ros2_transformers)/urdf/camera/camera_macro.urdf.xacro"/>
+  <xacro:include filename="$(find ros2_agents)/urdf/camera/camera_macro.urdf.xacro"/>
   <!-- camera side view for the cylinder -->
   <xacro:kinect_camera parent_link="locobot_base_footprint" cam_py="-0.25" cam_pz="0.04"/>
   <!-- overhead position -->

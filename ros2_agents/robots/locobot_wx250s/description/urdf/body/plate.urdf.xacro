@@ -18,7 +18,7 @@
           xyz="0 0 0"/>
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/base/locobot_base_plate.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/base/locobot_base_plate.stl"
             scale="${mesh_scale}"/>
         </geometry>
         <material name="interbotix_black"/>
@@ -29,7 +29,7 @@
           xyz="0 0 0"/>
         <geometry>
           <mesh
-            filename="package://ros2_transformers/robots/locobot_wx250s/description/meshes/base/locobot_base_plate.stl"
+            filename="package://ros2_agents/robots/locobot_wx250s/description/meshes/base/locobot_base_plate.stl"
             scale="${mesh_scale}"/>
         </geometry>
       </collision>

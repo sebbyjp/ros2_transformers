@@ -115,7 +115,7 @@
       name="ign_ros2_control::IgnitionROS2ControlPlugin">
       <robot_param>robot_description</robot_param>
       <parameters>
-        $(find ros2_transformers)/robots/locobot_wx250s/control/ros_controllers.yaml
+        $(find ros2_agents)/robots/locobot_wx250s/control/ros_controllers.yaml
       </parameters>
     </plugin>
   </xacro:macro>

@@ -14,21 +14,20 @@
 #include <ros2_agents/agent.hpp>
 #include <ros2_agents/observer.hpp>
 #include <ros2_agents/actor.hpp>
-
-#include <ros2_agents_interfaces/action/vla.hpp>
+#include <ros2_agents_interfaces/action/mbodied.hpp>
 namespace mbodied
 {
 
-typedef mbodied::Observer<std::vector<sensor_msgs::msg::Image>, sensor_msgs::msg::Image, sensor_msgs::msg::Image> OctoObserver;
-typedef mbodied::Agent<std::vector<sensor_msgs::msg::Image>, ros2_agents_interfaces::action::VLA,
-    sensor_msgs::msg::Image,  sensor_msgs::msg::Image>
-  OctoAgent;
+typedef Observer<std::vector<sensor_msgs::msg::Image>, sensor_msgs::msg::Image, sensor_msgs::msg::Image> OctoObserver;
+typedef Agent<std::vector<sensor_msgs::msg::Image>, ros2_agents_interfaces::action::Mbodied,
+    sensor_msgs::msg::Image,  sensor_msgs::msg::Image> OctoAgent;
+
 class Octo : public OctoAgent
 {
 public:
   explicit Octo(rclcpp::NodeOptions & options);
 
-  ros2_agents_interfaces::action::VLA::Feedback::SharedPtr
+  ros2_agents_interfaces::action::Mbodied::Feedback::SharedPtr
   actionFromObs(std::shared_ptr<OctoObserver> observer) override;
 
     std::unique_ptr<std::vector<sensor_msgs::msg::Image>> 
@@ -41,10 +40,6 @@ public:
   }
 
 private:
-
-  std::string get_instruction() {
-    return this->get_parameter("instruction").as_string();
-  }
 
   rviz_visual_tools::RvizVisualToolsPtr visual_tools_;
 

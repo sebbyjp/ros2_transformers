@@ -1,0 +1,9 @@
+# Instruction for the agent.
+string instruction
+---
+# Result status of grasp planning.
+string grasp_state
+---
+# Feedback sent to application
+ros2_agents_interfaces/MbodiedBasicControl[] actions
+
