@@ -6,7 +6,7 @@
     lwh: [0,0,0]
     poses: # x, y, z, roll, pitch, yaw
    #  - [0.53, -0.1, 0.1, 0, 0, 0]
-      - [0.58, 0, 0.25, 0, 0, 0]
+      - [0.53, 0, 0.25, 0, 0, 0]
 
 #  -  spawn: true
 #     name: mustard_bottle2

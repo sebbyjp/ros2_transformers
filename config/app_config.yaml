@@ -1,7 +1,7 @@
 
 use_sim_time: true 
 num_iterations: 100
-sleep_ms: 0
+sleep_ms: 500
 xyz_scale: 1.0
 rpy_scale: 1.0
 action_scale: 1.0
@@ -10,7 +10,7 @@ cartesian_step_size: 0.0005
 avoid_collisions: false
 cartesian: true
 instruction: "pick up the top block on the stack"
-xyz_bound_lo: 0.005
+xyz_bound_lo: 0.0
 xyz_bound_hi: 1.0
 rpy_bound_lo: 0.0
 rpy_bound_hi: 3.14

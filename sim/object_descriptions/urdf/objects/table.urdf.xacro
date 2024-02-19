@@ -8,20 +8,18 @@
   <xacro:arg name="w" default="0.5" />
   <xacro:arg name="color" default="blue" />
   <xacro:property name="h" value="$(arg h)" />
-  <xacro:property name="l" value="$(arg l)" />
-  <xacro:property name="w" value="$(arg w)" />
   <link name="table">
     <collision>
-      <origin xyz="0 0 ${h/2}" rpy="0 0 0"/>
+      <origin xyz="0 0 ${h/2.0}" rpy="0 0 0"/>
       <geometry>
-        <box size="${l} ${w} ${h}"/>
+        <box size="$(arg l) $(arg w) $(arg h)"/>
       </geometry>
     </collision>
 
     <visual>
-      <origin xyz="0 0 ${h/2}" rpy="0 0 0"/>
+      <origin xyz="0 0 ${h/2.0}" rpy="0 0 0"/>
       <geometry>
-        <box size="${l} ${w} ${h}"/>
+        <box size="$(arg l) $(arg w) $(arg h)"/>
       </geometry>
     </visual>
     <surface>
@@ -32,14 +30,14 @@
       </ode>
     </friction>
   </surface> 
-    <inertial>
-      <origin xyz="0 0 ${h/2}" rpy="0 0 0"/>
-      <mass value="10"/>
-      <inertia
-        ixx="10.0" ixy="0.0" ixz="0.0"
-        iyy="10.0" iyz="0.0"
-        izz="10.0"/>
-    </inertial>
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="10"/>
+    <inertia
+      ixx="0.24" ixy="0.0" ixz="0.0"
+      iyy="0.166" iyz="0.0"
+      izz="0.34"/>
+  </inertial>
   </link>
   <!-- <link name="table">
     <inertial> -->

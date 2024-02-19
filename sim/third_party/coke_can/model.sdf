@@ -23,12 +23,26 @@
           </mesh>
 
         </geometry>
+        <mu1>100</mu1>
+        <mu2>100</mu2>
+        <kp>1000000.0</kp>
+        <kd>100000.0</kd>
+        <slip1>0</slip1>
+        <slip2>0</slip2>
+        <minDepth>0.001</minDepth>
+        <maxVel>0</maxVel>
+        <torsional>
+            <ode>
+                <coefficient>1000</coefficient>
+                <slip>0</slip>
+            </ode>
+        </torsional>
         <surface>
           
           <friction>
             <ode>
-              <mu>1.0</mu>
-              <mu2>1.0</mu2>
+              <mu>100.0</mu>
+              <mu2>100.0</mu2>
             </ode>
           </friction>
           <contact>
@@ -38,7 +52,7 @@
             <kd>100000.0</kd>
             <slip1>0</slip1>
             <slip2>0</slip2>
-            <minDepth>0.001</minDepth>
+            <!-- <minDepth>0.001</minDepth> -->
             <maxVel>0</maxVel>
             <torsional>
                 <ode>
