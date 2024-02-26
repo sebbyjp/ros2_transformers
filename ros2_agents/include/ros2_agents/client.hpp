@@ -1,8 +1,23 @@
+// Copyright 2024 Sebastian Peralta
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
 #include <algorithm>
 #include <chrono>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp_action/rclcpp_action.hpp>
-#include <geometry_msgs/msg/twist_stamped.hpp>
+#include <geometry_msgs/msg/pose.hpp>
 #include <ros2_agents_interfaces/action/mbodied.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit_visual_tools/moveit_visual_tools.h>
@@ -368,7 +383,7 @@ private:
                                                                  xyz_bound_lo,
                                                                  xyz_bound_hi),
                                   current_pose.position.z + clip(xyz_scale *
-                                                                action.actions[0].right_hand.z,
+                                                                action.actions[0].left_hand.z,
                                                                  xyz_bound_lo,
                                                                  xyz_bound_hi) };
 
@@ -385,12 +400,11 @@ private:
                                                       action.actions[0].left_hand.yaw,
                                                         rpy_bound_lo,
                                                         rpy_bound_hi) };
-
                                 geometry_msgs::msg::Pose target = poseFromXYZRPY(
                                   { target_xyz[0], target_xyz[1], target_xyz[2],
                                     target_rpy[0], target_rpy[1],
                                     target_rpy[2] });
-
+                            
                                 return std::make_pair(target, target_rpy);
                               }();
 

@@ -1,7 +1,17 @@
-// Copyright (c) 2023 Sebastian Peralta
-//
-// This software is released under the MIT License.
-// https://opensource.org/licenses/MIT
+// Copyright 2024 Sebastian Peralta
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 
 #pragma once
 #include <rclcpp/rclcpp.hpp>
@@ -55,7 +65,7 @@ public:
     // pub_options.callback_group = pub_group;
     // obs_pub_ = this->create_publisher<ObsT>("observation", 10, pub_options);
     // pub_timer_ = this->create_wall_timer(std::chrono::milliseconds(100), [this]() -> void {
-    //   if (observation_cache_.size() > 0 && this->get_parameter("publish_observation").as_bool())
+    //   if (static_cast<int>(observation_cache_.size())obs_from_srcs_function_ > 0 && this->get_parameter("publish_observation").as_bool())
     //   {
     //     ObsT obs = *observation_cache_.back();
     //     try
@@ -81,13 +91,13 @@ public:
     }
     auto observation = std::apply(obs_from_srcs_function_, last_src_msgs_recieved_);
     std::unique_lock lock(obs_mutex_);
-    if (observation_cache_.size() == this->get_parameter("cache_size").as_int())
+    if (static_cast<int>(observation_cache_.size()) == this->get_parameter("cache_size").as_int())
     {
       observation_cache_.pop_front();
       num_pops_++;
     }
     observation_cache_.push_back(std::move(observation));
-    return std::pair(observation_cache_.size() - 1, observation_cache_.back().get());
+    return std::pair(static_cast<int>(observation_cache_.size()) - 1, observation_cache_.back().get());
   }
   /**
    * @brief
@@ -139,11 +149,11 @@ private:
     return std::all_of(recieved_first_src_msgs_.begin(), recieved_first_src_msgs_.end(), [](bool b) { return b; });
   }
 
+  std::function<std::unique_ptr<ObsT>(std::shared_ptr<SrcTs>...)> obs_from_srcs_function_;
   std::tuple<std::shared_ptr<rclcpp::Subscription<SrcTs>>...> src_subs_;
   std::tuple<std::shared_ptr<SrcTs>...> last_src_msgs_recieved_;  // The last set of src messages revieved.
   std::array<bool, sizeof...(SrcTs)> recieved_first_src_msgs_;    // True if the first message has been recieved.
 
-  std::function<std::unique_ptr<ObsT>(std::shared_ptr<SrcTs>...)> obs_from_srcs_function_;
   mutable std::shared_mutex obs_mutex_;
   
   // List of last `cache_size` observations made in reverse chronological order.

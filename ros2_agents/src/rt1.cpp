@@ -8,6 +8,7 @@
 #include <rviz_visual_tools/rviz_visual_tools.hpp>
 #include <Eigen/Geometry>
 #include <ros2_agents/rt1.hpp>
+
 using ros2_agents_interfaces::action::Mbodied;
 using sensor_msgs::msg::Image;
 
@@ -17,7 +18,6 @@ namespace mbodied
   RT1::RT1(rclcpp::NodeOptions& options) : RT1Agent(options), py_guard_()
   {
     this->declare_parameter("visualize", true);
-    this->declare_parameter("default_instruction", "pick block");
 
     // Whether or not to load the inference server or just pass through.
     this->declare_parameter("dummy", false);
@@ -27,7 +27,6 @@ namespace mbodied
     // Initialize parameters
     bool dummy = this->get_parameter("dummy").as_bool();
 
-    instruction_ = this->get_parameter("default_instruction").as_string();
     auto world_frame = this->get_parameter("world_frame").as_string();
     auto weights_key = this->get_parameter("weights_key").as_string();
     auto model_type  = this->get_parameter("model_type").as_string();
@@ -71,7 +70,7 @@ namespace mbodied
 
     bool visualize = this->get_parameter("visualize").as_bool();
     auto feedback  = std::make_shared<Mbodied::Feedback>();
-
+    feedback->actions.resize(1);
     // TODO(speralta): Read in onnx module and run inference
     py::gil_scoped_acquire acquire;
     py::dict result = inference_(visualize,
