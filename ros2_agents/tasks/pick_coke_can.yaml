@@ -9,7 +9,7 @@
 
  -  spawn: true
     name: table
-    path: sim/object_descriptions/urdf/objects/table.urdf.xacro
+    path: sim/third_party/TestBox/model.sdf
     count: 1
     lwh: [0.4, 0.5, 0.2]
     poses:

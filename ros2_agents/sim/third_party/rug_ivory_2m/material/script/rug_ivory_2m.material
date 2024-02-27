@@ -1,0 +1,13 @@
+material Custom/rug_ivory_2m
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture rug_ivory_469x588.png
+			}
+		}
+	}
+}
