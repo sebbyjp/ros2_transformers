@@ -17,7 +17,7 @@ rpy_bound_hi: 3.14
 cartesian: true # Recommended to avoid janky movements from RRT-like planners.
 xyz_tolerance: 0.0001
 rpy_tolerance: 0.01
-task_name: "living_tea"
+task_name: "cluttered"
 cartesian_step_size: 0.0005
 avoid_collisions: false
 

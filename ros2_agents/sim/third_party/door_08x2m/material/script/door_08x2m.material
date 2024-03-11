@@ -1,0 +1,13 @@
+material Custom/door_08x2m
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture door_08x2m.png
+			}
+		}
+	}
+}

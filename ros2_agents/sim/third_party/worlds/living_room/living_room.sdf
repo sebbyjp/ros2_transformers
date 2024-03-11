@@ -2,336 +2,342 @@
 <sdf version="1.8">
   <world name="living_tea">
     <light name="sun" type="directional">
-      <cast_shadows>1</cast_shadows>
-      <pose>0 0 10 0 -0 0</pose>
-      <diffuse>0.8 0.8 0.8 1</diffuse>
-      <specular>0.2 0.2 0.2 1</specular>
-      <attenuation>
-        <range>1000</range>
-        <constant>0.9</constant>
-        <linear>0.01</linear>
-        <quadratic>0.001</quadratic>
-      </attenuation>
-      <direction>-0.5 0.1 -0.9</direction>
-      <spot>
-        <inner_angle>0</inner_angle>
-        <outer_angle>0</outer_angle>
-        <falloff>0</falloff>
-      </spot>
-    </light>
-    <model name="ground_plane">
-      <static>1</static>
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <plane>
-              <normal>0 0 1</normal>
-              <size>100 100</size>
-            </plane>
-          </geometry>
-          <surface>
-            <contact>
-              <collide_bitmask>65535</collide_bitmask>
+    <cast_shadows>1</cast_shadows>
+    <pose>0 0 10 0 -0 0</pose>
+    <diffuse>0.8 0.8 0.8 1</diffuse>
+    <specular>0.2 0.2 0.2 1</specular>
+    <attenuation>
+      <range>1000</range>
+      <constant>0.9</constant>
+      <linear>0.01</linear>
+      <quadratic>0.001</quadratic>
+    </attenuation>
+    <direction>-0.5 0.1 -0.9</direction>
+    <spot>
+      <inner_angle>0</inner_angle>
+      <outer_angle>0</outer_angle>
+      <falloff>0</falloff>
+    </spot>
+  </light>
+  <model name="ground_plane">
+    <static>1</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>100 100</size>
+          </plane>
+        </geometry>
+        <surface>
+          <contact>
+            <collide_bitmask>65535</collide_bitmask>
+            <ode/>
+          </contact>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>50</mu2>
+            </ode>
+            <torsional>
               <ode/>
-            </contact>
-            <friction>
-              <ode>
-                <mu>100</mu>
-                <mu2>50</mu2>
-              </ode>
-              <torsional>
-                <ode/>
-              </torsional>
-            </friction>
-            <bounce/>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name="visual">
-          <cast_shadows>0</cast_shadows>
-          <geometry>
-            <plane>
-              <normal>0 0 1</normal>
-              <size>1 1</size>
-            </plane>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Grey</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
+            </torsional>
+          </friction>
+          <bounce/>
+        </surface>
+        <max_contacts>10</max_contacts>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>0</cast_shadows>
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>1 1</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <self_collide>0</self_collide>
+      <enable_wind>0</enable_wind>
+      <kinematic>0</kinematic>
+    </link>
+  </model>
+  <atmosphere type="adiabatic"/>
+  <physics type="ignored">
+    <max_step_size>0.001</max_step_size>
+    <real_time_factor>1</real_time_factor>
+    <real_time_update_rate>1</real_time_update_rate>
+  </physics>
+  <scene>
+    <ambient>0.4 0.4 0.4 1</ambient>
+    <background>0.7 0.7 0.7 1</background>
+    <shadows>1</shadows>
+  </scene>
+  <audio>
+    <device>default</device>
+  </audio>
+  <wind/>
+  <spherical_coordinates>
+    <surface_model>EARTH_WGS84</surface_model>
+    <latitude_deg>0</latitude_deg>
+    <longitude_deg>0</longitude_deg>
+    <elevation>0</elevation>
+    <heading_deg>0</heading_deg>
+  </spherical_coordinates>
+    <state world_name="living_tea">
+    <!-- <sim_time>13192 218000000</sim_time>
+    <real_time>480 209291832</real_time>
+    <wall_time>1695257208 814844271</wall_time> -->
+    <iterations>476528</iterations>
+    <model name="Bookshelf">
+      <pose>-2 2.4 0 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
+        <pose>-2 2.4 0 0 -0 0</pose>
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
       </link>
     </model>
-    <atmosphere type="adiabatic"/>
-    <physics type="ignored">
-      <max_step_size>0.001</max_step_size>
-      <real_time_factor>1</real_time_factor>
-      <!-- <real_time_update_rate>1</real_time_update_rate> -->
-    </physics>
-    <scene>
-      <ambient>0.4 0.4 0.4 1</ambient>
-      <background>0.7 0.7 0.7 1</background>
-      <shadows>1</shadows>
-    </scene>
-    <audio>
-      <device>default</device>
-    </audio>
-    <wind/>
-    <spherical_coordinates>
-      <surface_model>EARTH_WGS84</surface_model>
-      <latitude_deg>0</latitude_deg>
-      <longitude_deg>0</longitude_deg>
-      <elevation>0</elevation>
-      <heading_deg>0</heading_deg>
-    </spherical_coordinates>
-    <!-- <state world_name="living_tea">
-      <sim_time>13192 218000000</sim_time>
-      <real_time>480 209291832</real_time>
-      <wall_time>1695257208 814844271</wall_time>
-      <iterations>476528</iterations>
-      <model name="Bookshelf">
-        <pose>-2 2.4 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>-2 2.4 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="Chair">
-        <pose>1 0.1 0 -4e-06 2e-06 3.1415</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>1 0.1 0 2e-06 4e-06 -1.57088</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="CoffeeTable">
+    <model name="Chair">
+      <pose>1 0.1 0 -4e-06 2e-06 3.1415</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
+        <pose>1 0.1 0 2e-06 4e-06 -1.57088</pose>
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="CoffeeTable">
+      <pose>0 0.1 -0.000129 2e-06 -2e-06 -0</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
         <pose>0 0.1 -0.000129 2e-06 -2e-06 -0</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>0 0.1 -0.000129 2e-06 -2e-06 -0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="FemaleVisitorSit">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="FemaleVisitorSit">
+      <pose>-0.91 0.09 0 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
         <pose>-0.91 0.09 0 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>-0.91 0.09 0 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="LampAndStand">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="LampAndStand">
+      <pose>-1 -1 0 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
         <pose>-1 -1 0 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>-1 -1 0 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="MaleVisitorSit">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="MaleVisitorSit">
+      <pose>0 -0.91 0 0 -0 3.1415</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
         <pose>0 -0.91 0 0 -0 3.1415</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>0 -0.91 0 0 -0 3.1415</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="MiniSofa">
-        <pose>-1 0.1 -0.000897 -4e-06 -1.2e-05 -3.1415</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>-1 0.1 -0.000897 1.2e-05 -4e-06 1.57088</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="Sofa">
-        <pose>0.394007 -1.2 0.024684 -7e-06 0.056173 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>0.394007 -1.2 0.024684 0.056173 7e-06 3.1415</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="TVStand">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="MiniSofa">
+      <pose>-1 0.1 -0.000897 -4e-06 -1.2e-05 -3.1415</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
+        <pose>-1 0.1 -0.000897 1.2e-05 -4e-06 1.57088</pose>
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="Sofa">
+      <pose>0.394007 -1.2 0.024684 -7e-06 0.056173 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
+        <pose>0.394007 -1.2 0.024684 0.056173 7e-06 3.1415</pose>
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="TVStand">
+      <pose>0 2.2 0 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="body">
         <pose>0 2.2 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="body">
-          <pose>0 2.2 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="cabinet">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="cabinet">
+      <pose>2.21 2.17 0 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="cabinet_bottom_plate">
         <pose>2.21 2.17 0 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="cabinet_bottom_plate">
-          <pose>2.21 2.17 0 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="door_08x2m_0">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="door_08x2m_0">
+      <pose>-2.495 -1.2 1 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>-2.495 -1.2 1 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>-2.495 -1.2 1 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="ground_plane">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="ground_plane">
+      <pose>0 0 0 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>0 0 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>0 0 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="kaiaai_poster">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="kaiaai_poster">
+      <pose>-2.45 0 1.5 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>-2.45 0 1.5 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>-2.45 0 1.5 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="living_room">
-        <pose>-1.83596 1.40391 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-      </model>
-      <model name="makerspet_poster">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="living_room">
+      <pose>-1.83596 1.40391 0 0 -0 0</pose>
+      <scale>1 1 1</scale>
+    </model>
+    <model name="makerspet_poster">
+      <pose>-2.45 1 1.5 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>-2.45 1 1.5 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>-2.45 1 1.5 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="red_ball_10in">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="red_ball_10in">
+      <pose>1 1.25 0.127 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>1 1.25 0.127 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>1 1.25 0.127 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="room_wall_2x5">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="room_wall_2x5">
+      <pose>-2.5 0 1 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>-2.5 0 1 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>-2.5 0 1 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="room_wall_2x5_0">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="room_wall_2x5_0">
+      <pose>2.5 0 1 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>2.5 0 1 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>2.5 0 1 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="room_wall_2x5_1">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="room_wall_2x5_1">
+      <pose>0 -2.45 1 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>0 -2.45 1 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>0 -2.45 1 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="room_wall_2x5_2">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="room_wall_2x5_2">
+      <pose>0 2.45 1 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>0 2.45 1 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>0 2.45 1 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="rug_ivory_2m_0">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="rug_ivory_2m_0">
+      <pose>0 0.15 0 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>0 0.15 0 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>0 0.15 0 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="tv_65in_emissive">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="tv_65in_emissive">
+      <pose>0 2.4 0.9 0 -0 1.5707</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>0 2.4 0.9 0 -0 1.5707</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>0 2.4 0.9 0 -0 1.5707</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="window_curtains">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="window_curtains">
+      <pose>2.45 1 1 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>2.45 1 1 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>2.45 1 1 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name="window_curtains_0">
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <model name="window_curtains_0">
+      <pose>2.45 -1 1 0 -0 0</pose>
+      <scale>1 1 1</scale>
+      <link name="link">
         <pose>2.45 -1 1 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name="link">
-          <pose>2.45 -1 1 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <light name="sun">
-        <pose>0 0 10 0 -0 0</pose>
-      </light>
-    </state> -->
+        <velocity>0 0 0 0 -0 0</velocity>
+        <acceleration>0 0 0 0 -0 0</acceleration>
+        <wrench>0 0 0 0 -0 0</wrench>
+      </link>
+    </model>
+    <light name="sun">
+      <pose>0 0 10 0 -0 0</pose>
+    </light>
+  </state>
+    <model name="living_room">
+      <link name="link"></link>
+      <static>0</static>
+      <allow_auto_disable>1</allow_auto_disable>
+      <pose>-1.83596 1.40391 0 0 -0 0</pose>
+    </model>
     <model name="Sofa">
       <static>1</static>
       <link name="link">
@@ -339,14 +345,14 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/sebbyjp/models/sofa/2/files/meshes/Sofa.obj</uri>
+              <uri>model://sofa/meshes/Sofa.obj</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/sebbyjp/models/sofa/2/files/meshes/Sofa.obj</uri>
+                    <uri>model://sofa/meshes/Sofa.obj</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -388,7 +394,7 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/coffeetable/1/files/meshes/CoffeeTable.obj</uri>
+              <uri>model://coffeetable/meshes/CoffeeTable.obj</uri>
               <scale>0.00817 0.00817 0.00817</scale>
             </mesh>
           </geometry>
@@ -396,7 +402,7 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/coffeetable/1/files/meshes/CoffeeTable.obj</uri>
+              <uri>model://coffeetable/meshes/CoffeeTable.obj</uri>
               <scale>0.00817 0.00817 0.00817</scale>
             </mesh>
           </geometry>
@@ -439,7 +445,7 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/minisofa/2/files/meshes/minisofa.obj</uri>
+              <uri>model://minisofa/meshes/minisofa.obj</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -447,7 +453,7 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/minisofa/2/files/meshes/minisofa.obj</uri>
+              <uri>model://minisofa/meshes/minisofa.obj</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -490,14 +496,14 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/malevisitorsit/1/files/meshes/MaleVisitorSit.obj</uri>
+              <uri>model://malevisitorsit/meshes/MaleVisitorSit.obj</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/malevisitorsit/1/files/meshes/MaleVisitorSit_Col.obj</uri>
+              <uri>model://malevisitorsit/meshes/MaleVisitorSit.obj</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -527,14 +533,14 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/femalevisitorsit/1/files/meshes/FemaleVisitorSit.obj</uri>
+              <uri>model://FemaleVisitorSit/meshes/FemaleVisitorSit.obj</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/femalevisitorsit/1/files/meshes/FemaleVisitorSit_Col.obj</uri>
+              <uri>model://FemaleVisitorSit/meshes/FemaleVisitorSit.obj</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -564,7 +570,7 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/chair/2/files/meshes/Chair.obj</uri>
+              <uri>model://chair/meshes/Chair.obj</uri>
               <scale>0.00817 0.00817 0.00817</scale>
             </mesh>
           </geometry>
@@ -572,7 +578,7 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/chair/2/files/meshes/Chair.obj</uri>
+              <uri>model://chair/meshes/Chair.obj</uri>
               <scale>0.00817 0.00817 0.00817</scale>
             </mesh>
           </geometry>
@@ -650,7 +656,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -691,7 +697,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -732,7 +738,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -773,7 +779,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -814,7 +820,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -855,7 +861,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -896,7 +902,7 @@
             </script>
             <pbr>
               <metal>
-                <albedo_map>https://app.gazebosim.org/openrobotics/models/bookshelf/3/files/bookshelf_diffuse.jpg</albedo_map>
+                <albedo_map><uri>model://bookshelf/3/files/bookshelf_diffuse.jpg</uri></albedo_map>
               </metal>
             </pbr>
           </material>
@@ -1145,14 +1151,14 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/tvstand/1/files/meshes/TVStand.obj</uri>
+              <uri>model://tvstand/meshes/TVStand.obj</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://app.gazebosim.org/openrobotics/models/tvstand/1/files/meshes/TVStand_Col.obj</uri>
+              <uri>model://tvstand/meshes/TVStand.obj</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1182,30 +1188,7 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui> -->
-    <model name="makerspet_poster">
-      <link name="link">
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.03 0.85714 1</size>
-            </box>
-          </geometry>
-          <material>
-            <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/makerspet_poster/1/files/material/script</uri>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/makerspet_poster/1/files/material/textures</uri>
-              <name>Custom/makerspet</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <static>1</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose>-1.79858 1.04969 0 0 -0 0</pose>
-    </model>
+ 
     <model name="kaiaai_poster">
       <link name="link">
         <visual name="visual">
@@ -1216,8 +1199,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/kaiaai_poster/1/files/material/script</uri>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/kaiaai_poster/1/files/material/textures</uri>
+              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/fuel/models/kaiaai_poster/material/script</uri>
+              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/fuel/models/kaiaai_poster/material/textures</uri>
               <name>Custom/kaiaai</name>
             </script>
           </material>
@@ -1237,14 +1220,14 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>https://fuel.ignitionrobotics.org/1.0/openrobotics/models/lampandstand/2/files/meshes/LampAndStand.obj</uri>
+              <uri>model://lampandstand/meshes/LampAndStand.obj</uri>
             </mesh>
           </geometry>
         </visual>
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>https://fuel.ignitionrobotics.org/1.0/openrobotics/models/lampandstand/2/files/meshes/LampAndStand_Col.obj</uri>
+              <uri>model://lampandstand/meshes/LampAndStand.obj</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -1277,8 +1260,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/door_08x2m/1/files/material/script</uri>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/door_08x2m/1/files/material/textures</uri>
+              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/fuel/models/door_08x2m/material/script</uri>
+              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/fuel/models/door_08x2m/material/textures</uri>
               <name>Custom/door_08x2m</name>
             </script>
           </material>
@@ -1291,12 +1274,6 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose>-2.1175 -0.31181 0 0 -0 0</pose>
     </model>
-    <model name="living_room">
-      <link name="link"></link>
-      <static>0</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose>-1.83596 1.40391 0 0 -0 0</pose>
-    </model>
     <model name="room_wall_2x5">
       <link name="link">
         <visual name="visual">
@@ -1307,8 +1284,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/room_wall_2x5m/1/files/material/script</uri>
-              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/models/room_wall_2x5m/1/files/material/textures</uri>
+              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/fuel/models/room_wall_2x5m/material/script</uri>
+              <uri>https://fuel.ignitionrobotics.org/1.0/sebbyjp/fuel/models/room_wall_2x5m/material/textures</uri>
               <name>Custom/room_wall_2x5</name>
             </script>
           </material>
@@ -1351,8 +1328,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/room_wall_2x5m/1/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/room_wall_2x5m/1/files/material/textures</uri>
+              <uri>room_wall_2x5m/material/script</uri>
+              <uri>room_wall_2x5m/material/textures</uri>
               <name>Custom/room_wall_2x5</name>
             </script>
           </material>
@@ -1395,8 +1372,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/room_wall_2x5m/1/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/room_wall_2x5m/1/files/material/textures</uri>
+              <uri>room_wall_2x5m/material/script</uri>
+              <uri>room_wall_2x5m/material/textures</uri>
               <name>Custom/room_wall_2x5</name>
             </script>
           </material>
@@ -1439,8 +1416,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/room_wall_2x5m/1/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/room_wall_2x5m/1/files/material/textures</uri>
+              <uri>room_wall_2x5m/material/script</uri>
+              <uri>room_wall_2x5m/material/textures</uri>
               <name>Custom/room_wall_2x5</name>
             </script>
           </material>
@@ -1483,8 +1460,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/rug_ivory_2m/1/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/rug_ivory_2m/1/files/material/textures</uri>
+              <uri>rug_ivory_2m/material/script</uri>
+              <uri>rug_ivory_2m/material/textures</uri>
               <name>Custom/rug_ivory_2m</name>
             </script>
           </material>
@@ -1507,8 +1484,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/window_curtains/1/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/window_curtains/1/files/material/textures</uri>
+              <uri>window_curtains/material/script</uri>
+              <uri>window_curtains/material/textures</uri>
               <name>Custom/window_curtains</name>
             </script>
             <emissive>0 1 0 1</emissive>
@@ -1532,8 +1509,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/window_curtains/1/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/window_curtains/1/files/material/textures</uri>
+              <uri>window_curtains/material/script</uri>
+              <uri>window_curtains/material/textures</uri>
               <name>Custom/window_curtains</name>
             </script>
             <emissive>0 1 0 1</emissive>
@@ -1616,8 +1593,8 @@
           </geometry>
           <material>
             <script>
-              <uri>https://app.gazebosim.org/sebbyjp/models/tv_65in_emissive/4/files/material/script</uri>
-              <uri>https://app.gazebosim.org/sebbyjp/models/tv_65in_emissive/4/files/material/textures</uri>
+              <uri>tv_65in_emissive/4/files/material/script</uri>
+              <uri>tv_65in_emissive/4/files/material/textures</uri>
               <name>Custom/tv_emissive</name>
             </script>
           </material>

@@ -1,0 +1,13 @@
+material Custom/room_wall_2x5m
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture wall_texture_1404x562.jpg
+			}
+		}
+	}
+}

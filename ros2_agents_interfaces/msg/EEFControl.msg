@@ -1,5 +1,5 @@
-uint8 POSITION_DELTA=0
-uint8 POSITION_ABSOLUTE=1
+uint8 ABSOLUTE=0
+uint8 RELATIVE=1
 uint8 VELOCITY=2
 uint8 EFFORT=3
 
@@ -12,4 +12,4 @@ float64 z
 float64 roll
 float64 pitch
 float64 yaw
-uint8 control_type 0
+uint8 control_type 1
