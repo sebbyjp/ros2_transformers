@@ -1,6 +1,6 @@
 # ROS2 Transformers
 
-ROS2 package for deploying and fine-tuning multi-modal generalist agent models. This package provides inference servers as [ROS2 action servers](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html) for the most popular generalist multimodal robotics models (see [Available Models](#available-models). It depends on [robo_transformers](https://github.com/sebbyjp/robo_transformers) to access and run inference for these models.
+ROS2 package for deploying and fine-tuning multi-modal generalist agent models. This package provides inference servers as [ROS2 action servers](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html) for the most popular generalist multimodal robotics models (see [Available Models](#available-models). It depends on [robo_transformers](https://github.com/sebbyjp/robo_transformers) to access and run inference for these models. Currently it also depends on  [dgl_ros](https://github.com/sebbyjp/dgl_ros) for the agent servers but a refactor is needed.
 
 ## Table of Contents
 
@@ -32,11 +32,13 @@ ROS2 package for deploying and fine-tuning multi-modal generalist agent models. 
 
 ## Installation
 
+Follow installation for [dgl_ros](https://github.com/sebbyjp/dgl_ros).
+
 Clone this repo in the `src` directory of your ROS workspace:
 
 `git clone https://github.com/sebbyjp/ros2_transformers.git`
 
-Install ROS dependencies: 
+Install ROS dependencies:
 
 `rosdep install --from-paths src/ros2_transformers --ignore-src --rosdistro ${ROS_DISTRO} -y`
 

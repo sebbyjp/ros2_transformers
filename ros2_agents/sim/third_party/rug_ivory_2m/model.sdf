@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version='1.4'>
+  <model name='rug_ivory_2m'>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>1.6 2 0.005</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://rug_ivory_2m/material/script</uri>
+            <uri>model://rug_ivory_2m/material/textures</uri>
+            <name>Custom/rug_ivory_2m</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <static>1</static>
+    <allow_auto_disable>1</allow_auto_disable>
+  </model>
+</sdf>

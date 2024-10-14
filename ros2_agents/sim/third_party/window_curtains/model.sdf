@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<sdf version='1.4'>
+  <model name='window_curtains'>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.02 1.5676 2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://window_curtains/material/script</uri>
+            <uri>model://window_curtains/material/textures</uri>
+            <name>Custom/window_curtains</name>
+          </script>
+          <emissive>0 1 0 1</emissive>
+        </material>
+      </visual>
+    </link>
+    <static>1</static>
+    <allow_auto_disable>1</allow_auto_disable>
+  </model>
+</sdf>

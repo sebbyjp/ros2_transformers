@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version='1.4'>
+  <model name='door_08x2m'>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.8 2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://door_08x2m/material/script</uri>
+            <uri>model://door_08x2m/material/textures</uri>
+            <name>Custom/door_08x2m</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <static>1</static>
+    <allow_auto_disable>1</allow_auto_disable>
+  </model>
+</sdf>

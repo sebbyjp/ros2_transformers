@@ -1,0 +1,62 @@
+
+use_sim_time: true 
+num_iterations: 100
+sleep_ms: 500
+
+# Scale agent action outputs by this factor after truncating.
+xyz_scale: 1.0
+rpy_scale: 1.0
+world_frame: "world"
+instruction: "pick up the top block on the stack"
+xyz_bound_lo: 0.0 # Values with a smaller magnitude will be ignored
+xyz_bound_hi: 1.0 # Values with a larger magnitude will be truncated
+rpy_bound_lo: 0.0
+rpy_bound_hi: 3.14
+
+# Cartesian path planning
+cartesian: true # Recommended to avoid janky movements from RRT-like planners.
+xyz_tolerance: 0.0001
+rpy_tolerance: 0.01
+task_name: "cluttered"
+cartesian_step_size: 0.0005
+avoid_collisions: false
+
+## This file contains the configuration for the rt1_demo_app
+# rt1_demo_app:
+#   use_sim_time: {
+#     type: bool,
+#     default_value: true,
+#     description: "Use simulation time"
+#   }
+#   num_iterations: {
+#     type: int,
+#     default_value: 100,
+#     description: "Number of iterations to run the demo"
+#   }
+#   sleep_ms: {
+#     type: int,
+#     default_value: 100,
+#     description: "Sleep time between iterations"
+#   }
+#   action_scale: {
+#     type: double,
+#     default_value: 1.0,
+#     description: "Scale of the actions"
+#   }
+#   world_frame: {
+#     type: string,
+#     default_value: "world",
+#     description: "Frame of the world"
+#   }
+#   avoid_collisions: {
+#     type: bool,
+#     default_value: true,
+#     description: "Avoid collisions"
+#   }
+#   instruction: {
+#     type: string,
+#     default_value: "pick up the top block on the stack",
+#     description: "Instruction to follow"
+#   }
+
+#

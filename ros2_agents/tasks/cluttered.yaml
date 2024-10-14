@@ -1,0 +1,38 @@
+ -  spawn: true
+    name: coke_can
+    path: sim/third_party/coke_can/model.sdf
+    count: 1
+    colors: [black]
+    lwh: [0,0,0]
+    poses: # x, y, z, roll, pitch, yaw
+    - [0.45, -0.1, 0.1, 0, 0, 0]
+      # - [0.53, 0, 0.25, 0, 0, 0]
+
+#  -  spawn: true
+#     name: mustard_bottle2
+#     path: sim/third_party/mustard_bottle2/model.sdf
+#     count: 1
+#     colors: [black]
+#     lwh: [0,0,0]
+#     poses: # x, y, z, roll, pitch, yaw
+#     - [0.75, -0.15, 0.2, 0, 0, 0]
+    
+
+ -  spawn: true
+    name: big_spoon
+    path: sim/third_party/big_spoon/model.sdf
+    count: 1
+    colors: [black]
+    lwh: [0,0,0]
+    poses: # x, y, z, roll, pitch, yaw
+    - [0.5, 0, 0.25, 0, 0, 0]
+   #  - [0.58, -0.12, 0.25, 0, 0, 0]
+
+ -  spawn: true
+    name: table
+    path: sim/third_party/TestBox/model.sdf
+    count: 1
+    lwh: [0.4, 0.5, 0.2]
+    poses:
+    -  [0.6, 0,0, 0, 0, 0]
+    colors: [brown]

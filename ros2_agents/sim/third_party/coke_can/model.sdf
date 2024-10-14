@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="coke_can">
+    <link name="link">
+      <inertial>
+        <!-- <pose>-0.01 -0.012 0.25 0 0 0</pose> -->
+       <mass>0.00390</mass>
+        <inertia>
+          <ixx>0.00058</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00058</iyy>
+          <iyz>0</iyz>
+          <izz>0.00019</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <!-- <pose>-0.01 -0.012 0.25 0 0 0</pose> -->
+        <geometry>
+          <mesh>
+            <uri>model://coke_can/meshes/coke_can.dae</uri>
+             <scale>0.25 0.25 0.25</scale>
+          </mesh>
+
+        </geometry>
+        <mu1>100</mu1>
+        <mu2>100</mu2>
+        <kp>1000000.0</kp>
+        <kd>100000.0</kd>
+        <slip1>0</slip1>
+        <slip2>0</slip2>
+        <minDepth>0.001</minDepth>
+        <maxVel>0</maxVel>
+        <torsional>
+            <ode>
+                <coefficient>1000</coefficient>
+                <slip>0</slip>
+            </ode>
+        </torsional>
+        <surface>
+          
+          <friction>
+            <ode>
+              <mu>100.0</mu>
+              <mu2>100.0</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1000000.0</kp>
+            <kd>100000.0</kd>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+            <!-- <minDepth>0.001</minDepth> -->
+            <maxVel>0</maxVel>
+            <torsional>
+                <ode>
+                    <coefficient>1000</coefficient>
+                    <slip>0</slip>
+                </ode>
+            </torsional>
+            <ode>
+              <mu1>100</mu1>
+              <mu2>100</mu2>
+              <kp>1000000.0</kp>
+              <kd>100000.0</kd>
+              <slip1>0</slip1>
+              <slip2>0</slip2>
+              <minDepth>0.001</minDepth>
+              <maxVel>0</maxVel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <visual name="visual">
+
+        <!-- <pose>-0.01 -0.012 0.25 0 0 0</pose> -->
+        <geometry>
+
+          <mesh>
+            <uri>model://coke_can/meshes/coke_can.dae</uri>
+             <scale>0.25 0.25 0.25</scale>
+          </mesh>
+       
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

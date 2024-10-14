@@ -1,0 +1,11 @@
+# goal sent to agent server (The request)
+string action_name
+---
+# result sent to app client (The response status) 
+string grasp_state
+---
+# feedback sent to server (The response data)
+# grasp poses
+geometry_msgs/PoseStamped[] grasp_candidates
+# cost of each grasp
+float64[] costs

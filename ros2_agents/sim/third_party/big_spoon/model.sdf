@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<!--
+Copyright 2020 Google LLC.
+
+This work is licensed under the Creative Commons Attribution 4.0
+International License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/ or send a letter
+to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+-->
+<sdf version="1.6">
+  <model name="Threshold_Porcelain_Spoon_Rest_White">
+    <link name="link_0">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://big_spoon/meshes/model.obj</uri>
+              <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="collision_0">
+        <geometry>
+          <mesh>
+            <uri>model://big_spoon/meshes/model.obj</uri>
+              <scale>0.5 0.5 0.5</scale>
+          </mesh>
+        </geometry>
+        <mu1>100</mu1>
+        <mu2>100</mu2>
+        <kp>1000000.0</kp>
+        <kd>100000.0</kd>
+        <slip1>0</slip1>
+        <slip2>0</slip2>
+        <minDepth>0.001</minDepth>
+        <maxVel>0</maxVel>
+        <torsional>
+            <ode>
+                <coefficient>1000</coefficient>
+                <slip>0</slip>
+            </ode>
+        </torsional>
+        <surface>
+          
+          <friction>
+            <ode>
+              <mu>100.0</mu>
+              <mu2>100.0</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <mu1>100</mu1>
+            <mu2>100</mu2>
+            <kp>1000000.0</kp>
+            <kd>100000.0</kd>
+            <slip1>0</slip1>
+            <slip2>0</slip2>
+            <!-- <minDepth>0.001</minDepth> -->
+            <maxVel>0</maxVel>
+            <torsional>
+                <ode>
+                    <coefficient>1000</coefficient>
+                    <slip>0</slip>
+                </ode>
+            </torsional>
+            <ode>
+              <mu1>100</mu1>
+              <mu2>100</mu2>
+              <kp>1000000.0</kp>
+              <kd>100000.0</kd>
+              <slip1>0</slip1>
+              <slip2>0</slip2>
+              <minDepth>0.001</minDepth>
+              <maxVel>0</maxVel>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+      <inertial>
+        <!-- <inertia>
+            <ixx>0.000006</ixx>
+         <iyy>0.000006</iyy>
+         <izz>0.000006</izz>
+        </inertia> -->
+         <!-- <ixx>1.6697164243557222e-06</ixx>
+         <ixy>-7.608043365683558e-23</ixy>
+         <ixz>-8.85497422500391e-24</ixz>
+         <iyy>1.454996005383364e-06</iyy>
+         <iyz>5.1836699346339805e-24</iyz>
+         <izz>4.2928863786736384e-07</izz>
+        </inertia> -->
+        <mass>0.0006120391571167176</mass>
+      </inertial>
+    </link>
+  </model>
+</sdf>

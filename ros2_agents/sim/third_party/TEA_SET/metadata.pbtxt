@@ -1,0 +1,35 @@
+model {
+  file: "model.sdf"
+}
+name: "TEA_SET"
+description: "TEA SET\nHave tea-time with friends. Includes two place settings - teapot, sugar bowl, milk pitcher, 2 tea cups, 2 saucers, 2 tea spoons, ?2 tea bags, and 2 cubes of sugar."
+version: 1
+authors {
+  name: "Google"
+  email: "scanned-objects@google.com"
+}
+legal {
+  copyright: "Copyright 2020 Google LLC."
+  license: "Creative Commons Attribution 4.0 International"
+}
+annotations {
+  key: "brand"
+  value: "PlanToys"
+}
+annotations {
+  key: "mpn"
+  value: "3604"
+}
+annotations {
+  key: "sku"
+  value: "03604P01"
+}
+compatibilities {
+  name: "Gazebo"
+  version {
+    major: 11
+  }
+}
+categories {
+  first: "Toys"
+}
